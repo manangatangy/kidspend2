@@ -30,6 +30,12 @@
 
             <include layout="@layout/layout_toolbar"/>
 
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPagerxxx"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
             <!-- Content main body (populated by fragment)-->
             <FrameLayout
                 android:id="@+id/fragment_container_activity_simple"

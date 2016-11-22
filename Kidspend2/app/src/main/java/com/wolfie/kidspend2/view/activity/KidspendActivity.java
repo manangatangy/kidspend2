@@ -2,12 +2,15 @@ package com.wolfie.kidspend2.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
+import com.wolfie.kidspend2.view.adapter.GirlPagerAdapter;
 import com.wolfie.kidspend2.view.fragment.DrawerFragment;
+import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
 
@@ -15,6 +18,9 @@ public class KidspendActivity extends SimpleActivity {
 
     @BindView(R.id.layout_activity_drawer)
     public DrawerLayout mDrawer;
+
+//    @BindView(R.id.viewPager)
+//    ViewPager mViewPager;
 
     private MainPresenter mMainPresenter;
 
@@ -36,8 +42,11 @@ public class KidspendActivity extends SimpleActivity {
 //        int enumIndex = prefs.getInt(SettingsPresenter.PREF_SESSION_BACKGROUND_IMAGE, SimpleActivity.DEFAULT_BACKGROUND_IMAGE);
 //        setBackgroundImage(enumIndex);
 //
-//        // Create the main content fragment into it's container.
-//        setupFragment(ListFragment.class.getName(), R.id.fragment_container_activity_simple, null);
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_activity_simple, null);
+
+//        mViewPager.setAdapter(new GirlPagerAdapter(getSupportFragmentManager(), this));
+
 //
         // Create the drawer fragment into it's container.
         setupFragment(DrawerFragment.class.getName(), R.id.fragment_container_activity_drawer, null);
