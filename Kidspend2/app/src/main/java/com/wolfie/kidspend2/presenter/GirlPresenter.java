@@ -9,6 +9,11 @@ import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
 
 public class GirlPresenter extends BasePresenter<GirlUi> {
 
+    public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
+
+    private Girl mGirl;
+    private int mImageIndex;    // Index into the Girl.mImageIds.
+
     public GirlPresenter(GirlUi girlUi) {
         super(girlUi);
     }
@@ -17,8 +22,10 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
     public void resume() {
         super.resume();
         // TODO load up the girl data
-        Girl girl = getUi().getGirl();
-        getUi().setLabel(girl.name());
+        if (mGirl == null) {
+            mGirl = getUi().getGirl();
+        }
+        getUi().setLabel(mGirl.name());
     }
 
     @Override
@@ -28,18 +35,25 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
 
     @Override
     public void onSaveState(Bundle outState) {
-//        outState.putBoolean(KEY_DRAWER_SHOWING, mIsOpen);
+        outState.putString(KEY_GIRL_NAME, mGirl.name());
     }
 
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
-//        mIsOpen = savedState.getBoolean(KEY_DRAWER_SHOWING, false);
+        if (savedState != null) {
+            mGirl = Girl.valueOf(savedState.getString(KEY_GIRL_NAME));
+        }
+    }
+
+    public void onClickAdd() {
+
     }
 
     public interface GirlUi extends BaseUi {
 
         Girl getGirl();
         void setLabel(String text);
+
     }
 
 }

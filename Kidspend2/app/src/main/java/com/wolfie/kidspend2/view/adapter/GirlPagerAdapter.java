@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.presenter.GirlPresenter;
 import com.wolfie.kidspend2.view.fragment.GirlFragment;
 
 public class GirlPagerAdapter extends FragmentPagerAdapter {
@@ -18,11 +19,16 @@ public class GirlPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    /**
+     * @param position is the index into Girl.values, bounded by {@link #getCount()}
+     * @return the new or existing {@link GirlFragment} instance for the specified
+     * {@link Girl}
+     */
     @Override
     public Fragment getItem(int position) {
         Girl girl = Girl.values()[position];
         Bundle args = new Bundle();
-        args.putString(GirlFragment.KEY_GIRL_NAME, girl.name());
+        args.putString(GirlPresenter.KEY_GIRL_NAME, girl.name());
         Fragment fragment = Fragment.instantiate(mContext, GirlFragment.class.getName(), args);
         return fragment;
     }
