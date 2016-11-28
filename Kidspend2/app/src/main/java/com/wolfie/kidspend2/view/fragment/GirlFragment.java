@@ -2,6 +2,7 @@ package com.wolfie.kidspend2.view.fragment;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -24,8 +25,6 @@ import butterknife.OnClick;
 
 public class GirlFragment extends BaseFragment implements GirlUi {
 
-//    public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
-
     @BindView(R.id.text_view)
     TextView mTextView;
 
@@ -43,9 +42,6 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         mGirlPresenter.onClickAdd();
     }
 
-    // This member is first set from onCreateView() and then saved/restored as needed.
-//    private Girl mGirl;
-//    private int mImageIndex;    // Index into the Girl.mImageIds.
     private GirlPresenter mGirlPresenter;
 
     @Override
@@ -74,35 +70,9 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         return view;
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        if (outState != null) {
-//            outState.putString(GirlFragment.KEY_GIRL_NAME, mGirl.name());
-//        }
-//    }
-//
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            mGirl = Girl.valueOf(savedInstanceState.getString(KEY_GIRL_NAME));
-//        }
-//    }
-//
-//    public void setBackgroundImage(int enumIndex) {
-//        // If this is called before the toolbar is laid out then the height will be zero :/
-////        int toolBarHeight = mToolbar.getHeight();
-//        int toolBarHeight = 0;
-//        mImageView.setPadding(0, toolBarHeight, 0, 0);
-//        // adapt the image to the size of the display
-//        Display display = mBaseActivity.getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-//        int resourceId = ImageEnum.getImageId(enumIndex);
-//        BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(mImageView,
-//                getResources(), resourceId, size.x, size.y);
-//    }
+    public void bumpImage() {
+        mGirlPresenter.bumpImage();
+    }
 
     @Override
     public Girl getGirl() {
@@ -112,5 +82,18 @@ public class GirlFragment extends BaseFragment implements GirlUi {
     @Override
     public void setLabel(String text) {
         mTextView.setText(text);
+    }
+
+    @Override
+    public void setImage(@DrawableRes int resourceId) {
+        // If this is called before the toolbar is laid out then the height will be zero :/
+//        int toolBarHeight = mToolbar.getHeight();
+        int toolBarHeight = 0;
+        mImageView.setPadding(0, toolBarHeight, 0, 0);
+        // adapt the image to the size of the display
+        Display display = mBaseActivity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        new BitmapWorkerTask(mImageView, getResources(), resourceId, size.x, size.y);
     }
 }

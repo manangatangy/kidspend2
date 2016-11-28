@@ -1,6 +1,7 @@
 package com.wolfie.kidspend2.presenter;
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
 import com.wolfie.kidspend2.model.Girl;
@@ -10,6 +11,7 @@ import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
 public class GirlPresenter extends BasePresenter<GirlUi> {
 
     public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
+    public static final String KEY_GIRL_IMAGE_INDEX = "KEY_GIRL_IMAGE_INDEX";
 
     private Girl mGirl;
     private int mImageIndex;    // Index into the Girl.mImageIds.
@@ -21,11 +23,15 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
     @Override
     public void resume() {
         super.resume();
-        // TODO load up the girl data
         if (mGirl == null) {
-            mGirl = getUi().getGirl();
+            mGirl = getUi().getGirl();      // As passed from GirlPagerAdapter
         }
         getUi().setLabel(mGirl.name());
+        setImage();
+    }
+
+    private void setImage() {
+        getUi().setImage(mGirl.getImageResourceId(mImageIndex));
     }
 
     @Override
@@ -36,13 +42,22 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
     @Override
     public void onSaveState(Bundle outState) {
         outState.putString(KEY_GIRL_NAME, mGirl.name());
+        outState.putInt(KEY_GIRL_IMAGE_INDEX, mImageIndex);
     }
 
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
         if (savedState != null) {
             mGirl = Girl.valueOf(savedState.getString(KEY_GIRL_NAME));
+            mImageIndex = savedState.getInt(KEY_GIRL_IMAGE_INDEX);
         }
+    }
+
+    public void bumpImage() {
+        if (++mImageIndex >= mGirl.getImageCount()) {
+            mImageIndex = 0;
+        }
+        setImage();
     }
 
     public void onClickAdd() {
@@ -53,6 +68,7 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
 
         Girl getGirl();
         void setLabel(String text);
+        void setImage(@DrawableRes int resourceId);
 
     }
 

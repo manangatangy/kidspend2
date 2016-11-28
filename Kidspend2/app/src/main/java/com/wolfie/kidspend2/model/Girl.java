@@ -8,11 +8,10 @@ public enum Girl {
     RACHEL("Rachel");
 
     public final String mName;
-    private final int[] mImageIds;
+    private int[] mImageIds;
 
     Girl(String name) {
         mName = name;
-        mImageIds = ImageCollection.getImageIds(this);
     }
 
     public int getImageCount() {
@@ -20,6 +19,9 @@ public enum Girl {
     }
 
     public @DrawableRes int getImageResourceId(int index) {
+        if (mImageIds == null) {
+            mImageIds = ImageCollection.getImageIds(this);
+        }
         return mImageIds[index];
     }
 

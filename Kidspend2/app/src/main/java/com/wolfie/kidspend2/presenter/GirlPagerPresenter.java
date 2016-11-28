@@ -3,10 +3,14 @@ package com.wolfie.kidspend2.presenter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.wolfie.kidspend2.model.Girl;
 import com.wolfie.kidspend2.view.BaseUi;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter.GirlPagerUi;
+import com.wolfie.kidspend2.view.fragment.GirlFragment;
 
 public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
+
+    private Girl mGirlCurrent = null;
 
     public GirlPagerPresenter(GirlPagerUi girlPagerUi) {
         super(girlPagerUi);
@@ -32,8 +36,19 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
 //        mIsOpen = savedState.getBoolean(KEY_DRAWER_SHOWING, false);
     }
 
+    public void pagerSettled(Girl newGirl) {
+        // Inform the previous page's fragment
+        // to move to the next image (which will be shown when paging back).
+        if (mGirlCurrent != null) {
+            GirlFragment girlFragment = getUi().getGirlFragment(mGirlCurrent);
+            girlFragment.bumpImage();
+        }
+        mGirlCurrent = newGirl;
+    }
+
     public interface GirlPagerUi extends BaseUi {
 
+        GirlFragment getGirlFragment(Girl girl);
     }
 
 }
