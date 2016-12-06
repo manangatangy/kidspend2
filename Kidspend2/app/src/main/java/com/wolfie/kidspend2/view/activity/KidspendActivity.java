@@ -3,20 +3,27 @@ package com.wolfie.kidspend2.view.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
+import android.view.View;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
-import com.wolfie.kidspend2.view.fragment.DrawerFragment;
+import com.wolfie.kidspend2.view.NavDrawerListener;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
 
 public class KidspendActivity extends SimpleActivity {
 
-//    @BindView(R.id.layout_activity_drawer)
-//    public DrawerLayout mDrawer;
+    @BindView(R.id.activity_root_layout)
+    View mActivityRootView;
+
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout mDrawer;
+
+    @BindView(R.id.fragment_drawer)
+    public View mFragmentContainer;
 
 //    @BindView(R.id.viewPager)
 //    ViewPager mViewPager;
@@ -32,12 +39,29 @@ public class KidspendActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_main, null);
 
-        mMainPresenter = new MainPresenter(null, getApplicationContext());
+//        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
+        final ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, mDrawer, mToolbar, 0, 0);
+//                                          R.string.drawer_open, R.string.drawer_close);
+        // Defer code dependent on restoration of previous instance state.
+        mDrawer.post(new Runnable() {
+            @Override
+            public void run() {
+                actionBarDrawerToggle.syncState();
+            }
+        });
+        mDrawer.setDrawerListener(new NavDrawerListener(this, actionBarDrawerToggle));
+
+
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.hide();
+//        }
+
+//        mMainPresenter = new MainPresenter(null, getApplicationContext());
 
 //        // Set the initial values for some settings.  May be changed later by SettingsPresenter
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -46,8 +70,6 @@ public class KidspendActivity extends SimpleActivity {
 //        int enumIndex = prefs.getInt(SettingsPresenter.PREF_SESSION_BACKGROUND_IMAGE, SimpleActivity.DEFAULT_BACKGROUND_IMAGE);
 //        setBackgroundImage(enumIndex);
 //
-        // Create the main content fragment into it's container.
-        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_main, null);
 
 //        mViewPager.setAdapter(new GirlPagerAdapter(getSupportFragmentManager(), this));
 
@@ -76,6 +98,37 @@ public class KidspendActivity extends SimpleActivity {
     @LayoutRes
     public int getLayoutResource() {
         return R.layout.activity_kidspend;
+    }
+
+    @Override
+    public View getActivityRootView() {
+        return mActivityRootView;
+    }
+
+
+//    // loads the main content fragment
+//    public Fragment setupNavigationFragment(Class fragmentClass, int screenTitle) {
+//        int fragmentLayoutResourceId = R.id.fragment_container_main;
+//        String fragmentClassName = fragmentClass.getName();
+//        Fragment fragment = setupFragment(fragmentClassName, fragmentLayoutResourceId, null);
+////        setupTitle(getString(screenTitle));
+//        return fragment;
+//    }
+
+    public void openDrawer() {
+        if (mDrawer != null) {
+            mDrawer.openDrawer(mFragmentContainer);
+        }
+    }
+
+    public void closeDrawer() {
+        if (mDrawer != null) {
+            mDrawer.closeDrawer(mFragmentContainer);
+        }
+    }
+
+    public boolean isDrawerOpen() {
+        return mDrawer != null && mDrawer.isDrawerOpen(mFragmentContainer);
     }
 
     @Override

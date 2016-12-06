@@ -11,6 +11,8 @@ import com.wolfie.kidspend2.R;
 public enum ImageCollection {
 
 //    CLAIRE00(Girl.CLAIRE, R.drawable.claire_00),
+    CLAIRE00(Girl.CLAIRE, R.drawable.android_logo_1),
+
     CLAIRE01(Girl.CLAIRE, R.drawable.claire_01),
     CLAIRE02(Girl.CLAIRE, R.drawable.claire_02),
     CLAIRE03(Girl.CLAIRE, R.drawable.claire_03),
@@ -30,6 +32,8 @@ public enum ImageCollection {
     CLAIRE17(Girl.CLAIRE, R.drawable.claire_17),
 
 //    NINA00(Girl.NINA, R.drawable.nina_00),
+    NINA00(Girl.NINA, R.drawable.android_logo_2),
+
     NINA01(Girl.NINA, R.drawable.nina_01),
     NINA02(Girl.NINA, R.drawable.nina_02),
     NINA03(Girl.NINA, R.drawable.nina_03),
@@ -52,6 +56,8 @@ public enum ImageCollection {
     NINA20(Girl.NINA, R.drawable.nina_20),
 
 //    RACHEL00(Girl.RACHEL, R.drawable.rachel_00),
+    RACHEL00(Girl.RACHEL, R.drawable.android_logo_3),
+
     RACHEL01(Girl.RACHEL, R.drawable.rachel_01),
     RACHEL02(Girl.RACHEL, R.drawable.rachel_02),
     RACHEL03(Girl.RACHEL, R.drawable.rachel_03),

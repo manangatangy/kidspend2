@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,60 +6,40 @@
     android:id="@+id/activity_root_layout"
     >
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-
-    <RelativeLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <!-- Content main body (populated by fragment)-->
+
         <FrameLayout
             android:id="@+id/fragment_container_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
-        <TextView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:id="@+id/fragment_drawer"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:keepScreenOn="true"
-            android:text="DUMMY CONTENT"
-            android:textColor="#33b5e5"
-            android:textSize="50sp"
-            android:visibility="gone"
-            android:textStyle="bold"/>
-    </RelativeLayout>
+            android:layout_gravity="start"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@android:color/transparent"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:ignore="UselessParent">
+    </android.support.v4.widget.DrawerLayout>
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="BUTTON"/>
+    <include layout="@layout/layout_toolbar"/>
 
-        </LinearLayout>
-    </FrameLayout>
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
 
-</FrameLayout>
+</RelativeLayout>
