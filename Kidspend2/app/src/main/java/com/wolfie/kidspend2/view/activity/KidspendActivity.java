@@ -39,9 +39,6 @@ public class KidspendActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Create the main content fragment into it's container.
-        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_main, null);
-
 //        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
         final ActionBarDrawerToggle actionBarDrawerToggle =
                 new ActionBarDrawerToggle(this, mDrawer, mToolbar, 0, 0);

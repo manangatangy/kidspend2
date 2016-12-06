@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.wolfie.kidspend2.R;
+import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +66,9 @@ public abstract class SimpleActivity extends BaseActivity {
         if (resId != -1) {
             getSupportActionBar().setHomeActionContentDescription(resId);
         }
+
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_main, null);
 
     }
 
