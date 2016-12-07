@@ -10,10 +10,13 @@ import android.view.View;
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
 import com.wolfie.kidspend2.view.NavDrawerListener;
-import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
 
+/**
+ * This ref: https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
+ * explains how to style the action/tool bar
+ */
 public class KidspendActivity extends SimpleActivity {
 
     @BindView(R.id.activity_root_layout)

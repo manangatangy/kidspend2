@@ -1,7 +1,5 @@
 package com.wolfie.kidspend2.view.activity;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -42,7 +40,7 @@ public abstract class SimpleActivity extends BaseActivity {
 
         // Set the toolbar
         mToolbar.setTitleTextAppearance(this, R.style.AppTheme_H1); // Set title text to black (since toolbar is white?)
-        mToolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.black));
+        mToolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.white));
         boolean inhibitElevationAdjust = false;
         if (inhibitElevationAdjust) {
             fragmentContainer.setForeground(null);
@@ -57,9 +55,9 @@ public abstract class SimpleActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // Set the back-arrow-colour
-        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        upArrow.setColorFilter(getResources().getColor(R.color.red_on_black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+//        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        upArrow.setColorFilter(getResources().getColor(R.color.red_on_black), PorterDuff.Mode.SRC_ATOP);
+//        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         // Set a different icon for up indicator
         int resId = -1;
