@@ -16,6 +16,7 @@ import butterknife.BindView;
 /**
  * This ref: https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
  * explains how to style the action/tool bar
+ * Ref for custom icon: http://stackoverflow.com/a/27116116
  */
 public class KidspendActivity extends SimpleActivity {
 
@@ -44,8 +45,24 @@ public class KidspendActivity extends SimpleActivity {
 
 //        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
         final ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawer, mToolbar, 0, 0);
+                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
 //                                          R.string.drawer_open, R.string.drawer_close);
+
+        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        /*
+        This correctly sets the icon, and the drawer can be opened by dragging the edge
+        however there is no click listener on the icon, and also the drawer listener
+        doesn't shade the toolbar. Prob because getSupportActionBar ==> null
+         */
+//        drawerButton = (BadgeDrawerButton) findViewById(R.id.badge_drawer_button);
+//        drawerButton.setOnClickListener(
+//                new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        mDrawerLayout.openDrawer(Gravity.LEFT);
+//                    }
+//                });
         // Defer code dependent on restoration of previous instance state.
         mDrawer.post(new Runnable() {
             @Override

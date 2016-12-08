@@ -48,11 +48,10 @@ public abstract class SimpleActivity extends BaseActivity {
                 mToolbar.setElevation(0f);
             }
         }
-        setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setTitle("");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+// Remove toolbar as the action bar
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setTitle("");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // Set the back-arrow-colour
 //        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
