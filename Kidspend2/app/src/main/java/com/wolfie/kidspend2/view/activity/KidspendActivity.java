@@ -44,7 +44,7 @@ public class KidspendActivity extends SimpleActivity {
 
 //        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
         final ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawer, mToolbar, 0, 0);
+                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
 //                                          R.string.drawer_open, R.string.drawer_close);
         // Defer code dependent on restoration of previous instance state.
         mDrawer.post(new Runnable() {
@@ -60,8 +60,10 @@ public class KidspendActivity extends SimpleActivity {
         Sooo, this version has a hidden all the time, action/tool bar.
         There is no action bar icon, so there's nothing to click to open/close.
         The drawer can be dragged, which dims the main content.
-        Furthermore, the drawer has gap above it (through which the main content
-        can be seen) where the action bar would normally appear.
+        Furthermore, the drawer has gap above it of "?attr/actionBarSize"
+        (through which the main content can be seen) where the action bar
+        would normally appear.  This was specified in FrameLayout:id/fragment_drawer
+        as android:layout_marginTop="?android:attr/actionBarSize"
          */
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

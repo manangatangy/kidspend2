@@ -23,7 +23,6 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginTop="?android:attr/actionBarSize"
             android:background="@android:color/transparent"
             >
             <View
@@ -35,11 +34,5 @@
         </FrameLayout>
 
     </android.support.v4.widget.DrawerLayout>
-
-    <include layout="@layout/layout_toolbar"/>
-
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
 
 </RelativeLayout>

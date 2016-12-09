@@ -1,17 +1,11 @@
 package com.wolfie.kidspend2.view.activity;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.wolfie.kidspend2.R;
@@ -20,12 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.wolfie.kidspend2.R.id.toolbar;
-
 public abstract class SimpleActivity extends BaseActivity {
-
-    @BindView(toolbar)
-    public Toolbar mToolbar;
 
     @BindView(R.id.fragment_container_main)
     public FrameLayout fragmentContainer;
@@ -38,34 +27,6 @@ public abstract class SimpleActivity extends BaseActivity {
         setTheme(R.style.AppTheme);
         setContentView(getLayoutResource());
         unbinder = ButterKnife.bind(this);
-
-        // Set the toolbar
-        mToolbar.setTitleTextAppearance(this, R.style.AppTheme_H1); // Set title text to black (since toolbar is white?)
-        mToolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.black));
-        boolean inhibitElevationAdjust = false;
-        if (inhibitElevationAdjust) {
-            fragmentContainer.setForeground(null);
-            if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-                mToolbar.setElevation(0f);
-            }
-        }
-        setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setTitle("");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        // Set the back-arrow-colour
-        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        upArrow.setColorFilter(getResources().getColor(R.color.red_on_black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-        // Set a different icon for up indicator
-        int resId = -1;
-        if (resId != -1) {
-            getSupportActionBar().setHomeActionContentDescription(resId);
-        }
-
     }
 
     @LayoutRes
