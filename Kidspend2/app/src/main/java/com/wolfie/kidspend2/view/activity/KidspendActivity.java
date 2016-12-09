@@ -3,13 +3,13 @@ package com.wolfie.kidspend2.view.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.View;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
-import com.wolfie.kidspend2.view.NavDrawerListener;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
@@ -53,13 +53,21 @@ public class KidspendActivity extends SimpleActivity {
                 actionBarDrawerToggle.syncState();
             }
         });
-        mDrawer.setDrawerListener(new NavDrawerListener(this, actionBarDrawerToggle));
+        mDrawer.setDrawerListener(actionBarDrawerToggle);
 
 
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.hide();
-//        }
+        /*
+        Sooo, this version has a hidden all the time, action/tool bar.
+        There is no action bar icon, so there's nothing to click to open/close.
+        The drawer can be dragged, which dims the main content.
+        Furthermore, the drawer has gap above it (through which the main content
+        can be seen) where the action bar would normally appear.
+         */
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+//            actionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            actionBar.hide();
+        }
 
 //        mMainPresenter = new MainPresenter(null, getApplicationContext());
 

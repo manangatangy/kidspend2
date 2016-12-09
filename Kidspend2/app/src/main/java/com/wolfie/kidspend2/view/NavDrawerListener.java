@@ -61,15 +61,17 @@ public class NavDrawerListener implements DrawerListener {
 
     private void tintActionBarOnDrawerOpen(float scale) {
         if (mActionBar != null) {
-            if (scale == 0) { // Fully closed
-                mActionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            } else if (scale == 1) { // Full open
-                mActionBar.setBackgroundDrawable(new ColorDrawable(mToolbarOpenColor));
-            } else { // Opening
-                int scaledAlpha = (int) (((float) mToolbarAlpha) * scale);
-                mActionBar.setBackgroundDrawable(new ColorDrawable(
-                        Color.argb(scaledAlpha, mToolbarRed, mToolbarGreen, mToolbarBlue)));
-            }
+            mActionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//            if (scale == 0) { // Fully closed
+//                mActionBar.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            } else if (scale == 1) { // Full open
+//                mActionBar.setBackgroundDrawable(new ColorDrawable(mToolbarOpenColor));
+//            } else { // Opening
+//                int scaledAlpha = (int) (((float) mToolbarAlpha) * scale);
+//                mActionBar.setBackgroundDrawable(new ColorDrawable(
+//                        Color.argb(scaledAlpha, mToolbarRed, mToolbarGreen, mToolbarBlue)));
+//            }
         }
     }
 
