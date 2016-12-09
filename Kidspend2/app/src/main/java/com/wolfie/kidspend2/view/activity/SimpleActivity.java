@@ -16,9 +16,6 @@ import butterknife.Unbinder;
 
 public abstract class SimpleActivity extends BaseActivity {
 
-    @BindView(R.id.fragment_container_main)
-    public FrameLayout fragmentContainer;
-
     protected Unbinder unbinder;
 
     @Override

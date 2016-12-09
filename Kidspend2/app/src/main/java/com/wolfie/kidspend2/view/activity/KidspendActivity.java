@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
+import com.wolfie.kidspend2.view.IconExpanderDrawerListener;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
@@ -22,8 +25,21 @@ public class KidspendActivity extends SimpleActivity {
     @BindView(R.id.drawer_layout)
     public DrawerLayout mDrawer;
 
-    @BindView(R.id.fragment_drawer)
-    public View mFragmentContainer;
+    @BindView(R.id.drawer_layout_child_1)
+    public RelativeLayout mMainContentContainer;    // First child holds main content, icon
+
+    @BindView(R.id.drawer_layout_child_2)
+    public LinearLayout mDrawerContainer;           // Second child of mDrawer holds nav-menu
+
+    @BindView(R.id.icon_frame)
+    public FrameLayout mIconFrame;
+
+//    @BindView(R.id.icon_spacer)
+//    public View mIconSpacer;
+
+    @BindView(R.id.drawer_frame)
+    public FrameLayout mDrawerFrame;
+
 
 //    @BindView(R.id.viewPager)
 //    ViewPager mViewPager;
@@ -40,20 +56,11 @@ public class KidspendActivity extends SimpleActivity {
         super.onCreate(savedInstanceState);
 
         // Create the main content fragment into it's container.
-        setupFragment(GirlPagerFragment.class.getName(), R.id.fragment_container_main, null);
+        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
 
-//        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
-        final ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
-//                                          R.string.drawer_open, R.string.drawer_close);
-        // Defer code dependent on restoration of previous instance state.
-        mDrawer.post(new Runnable() {
-            @Override
-            public void run() {
-                actionBarDrawerToggle.syncState();
-            }
-        });
-        mDrawer.setDrawerListener(actionBarDrawerToggle);
+        IconExpanderDrawerListener drawerListener
+                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerFrame);
+        mDrawer.setDrawerListener(drawerListener);
 
 
         /*
@@ -127,18 +134,18 @@ public class KidspendActivity extends SimpleActivity {
 
     public void openDrawer() {
         if (mDrawer != null) {
-            mDrawer.openDrawer(mFragmentContainer);
+            mDrawer.openDrawer(mDrawerContainer);
         }
     }
 
     public void closeDrawer() {
         if (mDrawer != null) {
-            mDrawer.closeDrawer(mFragmentContainer);
+            mDrawer.closeDrawer(mDrawerContainer);
         }
     }
 
     public boolean isDrawerOpen() {
-        return mDrawer != null && mDrawer.isDrawerOpen(mFragmentContainer);
+        return mDrawer != null && mDrawer.isDrawerOpen(mDrawerContainer);
     }
 
     @Override

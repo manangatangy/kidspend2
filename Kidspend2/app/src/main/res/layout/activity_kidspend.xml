@@ -13,25 +13,55 @@
         android:layout_height="match_parent"
         >
 
-        <FrameLayout
-            android:id="@+id/fragment_container_main"
+        <RelativeLayout
+            android:id="@+id/drawer_layout_child_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
-        <FrameLayout
-            android:id="@+id/fragment_drawer"
-            android:layout_width="300dp"
+            >
+            <FrameLayout
+                android:id="@+id/content_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            <FrameLayout
+                android:id="@+id/icon_frame"
+                android:layout_width="@dimen/icon_height_closed"
+                android:layout_height="@dimen/icon_height_closed"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                >
+                <ImageView
+                    android:id="@+id/icon_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_bnb_nab_pay_unselected"
+                    />
+            </FrameLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/drawer_layout_child_2"
+            android:layout_width="@dimen/drawer_width_open"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@android:color/transparent"
+            android:orientation="vertical"
             >
-            <View
+            <FrameLayout
+                android:id="@+id/drawer_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorAccent"
-                />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingTop="0dp"
+                >
+                <View
+                    android:id="@+id/temp_filler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"
+                    />
+            </FrameLayout>
 
-        </FrameLayout>
+        </LinearLayout>
 
     </android.support.v4.widget.DrawerLayout>
 

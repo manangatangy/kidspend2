@@ -1,2 +1,4 @@
 <resources>
+    <dimen name="drawer_width_open">300dp</dimen>
+    <dimen name="icon_height_closed">100dp</dimen>
 </resources>
