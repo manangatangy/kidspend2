@@ -3,13 +3,12 @@ package com.wolfie.kidspend2.view.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.View;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
-import com.wolfie.kidspend2.view.NavDrawerListener;
 
 import butterknife.BindView;
 
@@ -44,11 +43,11 @@ public class KidspendActivity extends SimpleActivity {
         super.onCreate(savedInstanceState);
 
 //        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
-        final ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
+//        final ActionBarDrawerToggle actionBarDrawerToggle =
+//                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
 //                                          R.string.drawer_open, R.string.drawer_close);
 
-        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+//        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
         /*
         This correctly sets the icon, and the drawer can be opened by dragging the edge
         however there is no click listener on the icon, and also the drawer listener
@@ -64,19 +63,19 @@ public class KidspendActivity extends SimpleActivity {
 //                    }
 //                });
         // Defer code dependent on restoration of previous instance state.
-        mDrawer.post(new Runnable() {
-            @Override
-            public void run() {
-                actionBarDrawerToggle.syncState();
-            }
-        });
-        mDrawer.setDrawerListener(new NavDrawerListener(this, actionBarDrawerToggle));
+//        mDrawer.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                actionBarDrawerToggle.syncState();
+//            }
+//        });
+//        mDrawer.setDrawerListener(new NavDrawerListener(this, actionBarDrawerToggle));
 
 
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.hide();
-//        }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
 //        mMainPresenter = new MainPresenter(null, getApplicationContext());
 

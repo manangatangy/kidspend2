@@ -1,14 +1,8 @@
 package com.wolfie.kidspend2.view.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,23 +45,23 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getEskeyActivity().setSupportActionBar(getEskeyActivity().mToolbar);
-
-        getEskeyActivity().mToolbar.post(new Runnable() {
-            @Override
-            public void run() {
-                int height = getEskeyActivity().mToolbar.getHeight();
-                // Read your drawable from somewhere
-                Drawable dr = getResources().getDrawable(R.drawable.claire_00, null);
-                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                // Scale it to 50 x 50
-                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, height, height, true));
-                // Set your new, scaled drawable "d"
-
-                getEskeyActivity().mToolbar.setNavigationIcon(d);
-            }
-        });
-        getEskeyActivity().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        getEskeyActivity().setSupportActionBar(getEskeyActivity().mToolbar);
+//
+//        getEskeyActivity().mToolbar.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                int height = getEskeyActivity().mToolbar.getHeight();
+//                // Read your drawable from somewhere
+//                Drawable dr = getResources().getDrawable(R.drawable.claire_00, null);
+//                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+//                // Scale it to 50 x 50
+//                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, height, height, true));
+//                // Set your new, scaled drawable "d"
+//
+//                getEskeyActivity().mToolbar.setNavigationIcon(d);
+//            }
+//        });
+//        getEskeyActivity().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // http://www.101apps.co.za/index.php/articles/using-toolbars-in-your-apps.html
 
 //        mToggle = new ActionBarDrawerToggle(
