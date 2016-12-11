@@ -1,5 +1,7 @@
 package com.wolfie.kidspend2.view.activity;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
@@ -7,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -34,8 +37,8 @@ public class KidspendActivity extends SimpleActivity {
     @BindView(R.id.icon_frame)
     public FrameLayout mIconFrame;
 
-//    @BindView(R.id.icon_spacer)
-//    public View mIconSpacer;
+    @BindView(R.id.icon_image_view)
+    public ImageView mIconImageView;
 
     @BindView(R.id.drawer_frame)
     public FrameLayout mDrawerFrame;
@@ -59,7 +62,7 @@ public class KidspendActivity extends SimpleActivity {
         setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
 
         IconExpanderDrawerListener drawerListener
-                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerFrame);
+                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerFrame, mIconImageView);
         mDrawer.setDrawerListener(drawerListener);
 
 
@@ -109,6 +112,30 @@ public class KidspendActivity extends SimpleActivity {
 //        // Create the settings (activity sheet) fragment into it's container.
 //        setupFragment(SettingsFragment.class.getName(), R.id.fragment_container_settings, null);
 
+//        Drawable drawable = getResources().getDrawable(R.drawable.logo_white_nina2, null);
+//        drawable.setBounds(0, 0, (int)(drawable.getIntrinsicWidth()*0.5),
+//                (int)(drawable.getIntrinsicHeight()*0.5));
+//        ScaleDrawable scaleDrawable = new ScaleDrawable(drawable, 0, 1.0f, 1.0f);
+//        scaleDrawable.setLevel(5000);
+//        mIconImageView.setImageDrawable(scaleDrawable.getDrawable());
+
+
+        /*
+        Max size = drawer_width_open  (300dp)
+        Min size = icon_height_closed  (100dp)
+        Min rot = 360
+        Min rot = 0
+        0%      33%     100%
+        0dp     100dp   300dp
+        ??      0(o)    360(o)
+        -180
+         */
+        mIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.logo_scaled_claire, null));
+//        mIconImageView.setImageLevel(3333);
+//        mIconImageView.setImageLevel(6666);
+
+
+//        mIconImageView.setImageLevel(10000);
     }
 
     @Override
