@@ -1,7 +1,5 @@
 package com.wolfie.kidspend2.view.activity;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
@@ -34,11 +32,14 @@ public class KidspendActivity extends SimpleActivity {
     @BindView(R.id.drawer_layout_child_2)
     public LinearLayout mDrawerContainer;           // Second child of mDrawer holds nav-menu
 
-    @BindView(R.id.icon_frame)
-    public FrameLayout mIconFrame;
+//    @BindView(R.id.icon_frame)
+//    public FrameLayout mIconFrame;
 
     @BindView(R.id.icon_image_view)
     public ImageView mIconImageView;
+
+    @BindView(R.id.icon_background_view)
+    public View mIconBackgroundView;
 
     @BindView(R.id.drawer_frame)
     public FrameLayout mDrawerFrame;
@@ -62,7 +63,7 @@ public class KidspendActivity extends SimpleActivity {
         setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
 
         IconExpanderDrawerListener drawerListener
-                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerFrame, mIconImageView);
+                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerFrame, mIconImageView, mIconBackgroundView);
         mDrawer.setDrawerListener(drawerListener);
 
 
@@ -130,7 +131,7 @@ public class KidspendActivity extends SimpleActivity {
         ??      0(o)    360(o)
         -180
          */
-        mIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.logo_scaled_claire, null));
+        mIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.alogo_claire_scaled, null));
 //        mIconImageView.setImageLevel(3333);
 //        mIconImageView.setImageLevel(6666);
 

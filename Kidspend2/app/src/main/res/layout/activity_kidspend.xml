@@ -48,20 +48,24 @@
         </LinearLayout>
     </android.support.v4.widget.DrawerLayout>
 
-    <FrameLayout
-        android:id="@+id/icon_frame"
-        android:layout_width="@dimen/drawer_width_open"
-        android:layout_height="@dimen/drawer_width_open"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         >
+        <View
+            android:id="@+id/icon_background_view"
+            android:layout_width="@dimen/drawer_width_open"
+            android:layout_height="@dimen/drawer_width_open"
+            android:background="@color/black"
+            android:visibility="gone"
+            />
         <ImageView
             android:id="@+id/icon_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
-    </FrameLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

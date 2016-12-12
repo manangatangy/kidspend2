@@ -13,6 +13,7 @@ public class IconExpanderDrawerListener implements DrawerListener {
 
     private FrameLayout mDrawerFrame;
     private ImageView mIconImageView;
+    private View mIconBackgroundView;
     private float mOpenDrawerWidth;
     private int mMinSpacerHeight;
 
@@ -28,9 +29,10 @@ public class IconExpanderDrawerListener implements DrawerListener {
     public void onDrawerStateChanged(int newState) {
     }
 
-    public IconExpanderDrawerListener(Context context, FrameLayout drawerFrame, ImageView iconImageView) {
+    public IconExpanderDrawerListener(Context context, FrameLayout drawerFrame, ImageView iconImageView, View iconBackgroundView) {
         mDrawerFrame = drawerFrame;
         mIconImageView = iconImageView;
+        mIconBackgroundView = iconBackgroundView;
         mOpenDrawerWidth = (float)context.getResources().getDimensionPixelSize(R.dimen.drawer_width_open);
         mMinSpacerHeight = context.getResources().getDimensionPixelSize(R.dimen.icon_height_closed);
     }
@@ -51,7 +53,8 @@ public class IconExpanderDrawerListener implements DrawerListener {
 //        tintActionBarOnDrawerOpen(slideOffset); // 0 (closed) to 1 (open)
         float level = 3333 + (float)(6666) * slideOffset;
         mIconImageView.setImageLevel((int)level);
-
+        // Once the drawer is fully open, then blacken the background.
+        mIconBackgroundView.setVisibility((slideOffset == 1) ? View.VISIBLE : View.GONE);
     }
 
 }
