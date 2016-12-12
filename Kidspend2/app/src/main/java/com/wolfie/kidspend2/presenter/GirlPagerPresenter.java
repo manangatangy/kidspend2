@@ -37,10 +37,6 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
     }
 
     public void pagerSettled(Girl newGirl) {
-        // TODO temp inhibit image bumping
-        if (true) {
-            return;
-        }
         // Inform the previous page's fragment
         // to move to the next image (which will be shown when paging back).
         if (mGirlCurrent != null) {

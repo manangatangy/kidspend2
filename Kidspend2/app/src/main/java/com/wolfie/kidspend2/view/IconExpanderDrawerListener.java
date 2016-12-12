@@ -12,8 +12,8 @@ import com.wolfie.kidspend2.R;
 public class IconExpanderDrawerListener implements DrawerListener {
 
     private FrameLayout mDrawerFrame;
-    private ImageView mIconImageView;
-    private View mIconBackgroundView;
+    private TwirlyView mTwirlyView;
+
     private float mOpenDrawerWidth;
     private int mMinSpacerHeight;
 
@@ -29,10 +29,9 @@ public class IconExpanderDrawerListener implements DrawerListener {
     public void onDrawerStateChanged(int newState) {
     }
 
-    public IconExpanderDrawerListener(Context context, FrameLayout drawerFrame, ImageView iconImageView, View iconBackgroundView) {
+    public IconExpanderDrawerListener(Context context, FrameLayout drawerFrame, TwirlyView twirlyView) {
         mDrawerFrame = drawerFrame;
-        mIconImageView = iconImageView;
-        mIconBackgroundView = iconBackgroundView;
+        mTwirlyView = twirlyView;
         mOpenDrawerWidth = (float)context.getResources().getDimensionPixelSize(R.dimen.drawer_width_open);
         mMinSpacerHeight = context.getResources().getDimensionPixelSize(R.dimen.icon_height_closed);
     }
@@ -42,19 +41,18 @@ public class IconExpanderDrawerListener implements DrawerListener {
         if (mDrawerFrame == null) {
             return;
         }
+        // 0 (closed) to 1 (open)
         int visibleDrawerWidth = (int)(slideOffset * mOpenDrawerWidth);
-        Log.d("drawer", "visibleDrawerWidth=" + visibleDrawerWidth + ",  slideOffset=" + slideOffset);
         // The drawerFrame top padding is minimum of icon_height_closed.  Once the drawer
         // width exceeds that value, then the padding increases in height so that
         // it is square.
         int topPadding = (visibleDrawerWidth < mMinSpacerHeight) ? mMinSpacerHeight : visibleDrawerWidth;
-        Log.d("drawer", "       top-padding=" + (topPadding));
         mDrawerFrame.setPadding(0, topPadding, 0, 0);
-//        tintActionBarOnDrawerOpen(slideOffset); // 0 (closed) to 1 (open)
-        float level = 3333 + (float)(6666) * slideOffset;
-        mIconImageView.setImageLevel((int)level);
-        // Once the drawer is fully open, then blacken the background.
-        mIconBackgroundView.setVisibility((slideOffset == 1) ? View.VISIBLE : View.GONE);
+
+        mTwirlyView.setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
+        mTwirlyView.setBackgroundVisibility(slideOffset);
     }
+
+    //         mIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.alogo_claire_scaled, null));
 
 }

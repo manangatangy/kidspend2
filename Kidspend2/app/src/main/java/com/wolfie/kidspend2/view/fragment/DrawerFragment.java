@@ -72,31 +72,6 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
 //        mToggle.syncState();
     }
 
-    @OnClick(R.id.menu_item_settings)
-    void onMenuSettings() {
-        mDrawerPresenter.onMenuSettingsClick();
-    }
-    @OnClick(R.id.menu_item_export)
-    void onMenuExport() {
-        mDrawerPresenter.onMenuExportClick();
-    }
-    @OnClick(R.id.menu_item_import)
-    void onMenuImport() {
-        mDrawerPresenter.onMenuImportClick();
-    }
-    @OnClick(R.id.menu_item_help)
-    void onMenuHelp() {
-        mDrawerPresenter.onMenuHelp();
-    }
-    @OnClick(R.id.menu_item_backup)
-    void onMenuBackup() {
-        mDrawerPresenter.onMenuBackup();
-    }
-    @OnClick(R.id.menu_item_restore)
-    void onMenuRestore() {
-        mDrawerPresenter.onMenuRestore();
-    }
-
     @Override
     public boolean isDrawerOpen() {
 //        return getEskeyActivity().mDrawer.isDrawerOpen(Gravity.LEFT);
