@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter.GirlPagerUi;
 import com.wolfie.kidspend2.view.adapter.GirlPagerAdapter;
@@ -41,7 +42,7 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
     }
 
     // mSelectedPosition is the value passed from onPageSelected(), and mCurrentSettledPosition
-    // is the values most recently passed to GirlPagerPresenter.pagerSettled().
+    // is the values most recently passed to GirlPagerPresenter.onGirlChanged().
     private int mSelectedPosition = -1;
     private int mCurrentSettledPosition = -1;
 
@@ -65,9 +66,10 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE && mSelectedPosition != mCurrentSettledPosition) {
                     // We have settled to a position (mSelectedPosition) that is different from
-                    // what we last told the GirlPagerPresenter.  Therefore, update it.
+                    // what we last told the GirlPagerPresenter.  Therefore, update the presenter.
+                    // Also inform the Activity of a change in Girl.
                     Girl newGirl = Girl.values()[mSelectedPosition];
-                    mGirlPagerPresenter.pagerSettled(newGirl);
+                    mGirlPagerPresenter.onGirlChanged(newGirl);
                     mCurrentSettledPosition = mSelectedPosition;
                 }
             }
@@ -86,6 +88,13 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
             }
         }
         return null;
+    }
+
+    @Override
+    public void updateIcon(Girl girl, @ImageShade int imageShade) {
+        // Inform the main activity (which owns the twirling icon)
+        // that there's been a change of girl or image background shade.
+        getKidspendActivity().updateIcon(girl, imageShade);
     }
 
     @Override

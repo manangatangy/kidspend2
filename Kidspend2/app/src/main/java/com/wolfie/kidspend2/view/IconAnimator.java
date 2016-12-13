@@ -7,10 +7,13 @@ import android.widget.FrameLayout;
 
 import com.wolfie.kidspend2.R;
 
-public class IconExpanderDrawerListener implements DrawerListener {
+/**
+ * Animates the {@link TwirlingImage} in response to the Drawer change
+ */
+public class IconAnimator implements DrawerListener {
 
     private FrameLayout mDrawerContainer;
-    private TwirlyView mTwirlyView;
+    private TwirlingImage mTwirlingImage;
 
     private float mOpenDrawerWidth;
     private int mMinSpacerHeight;
@@ -27,9 +30,9 @@ public class IconExpanderDrawerListener implements DrawerListener {
     public void onDrawerStateChanged(int newState) {
     }
 
-    public IconExpanderDrawerListener(Context context, FrameLayout drawerContainer, TwirlyView twirlyView) {
+    public IconAnimator(Context context, FrameLayout drawerContainer, TwirlingImage twirlingImage) {
         mDrawerContainer = drawerContainer;
-        mTwirlyView = twirlyView;
+        mTwirlingImage = twirlingImage;
         mOpenDrawerWidth = (float)context.getResources().getDimensionPixelSize(R.dimen.drawer_width_open);
         mMinSpacerHeight = context.getResources().getDimensionPixelSize(R.dimen.icon_height_closed);
     }
@@ -40,6 +43,15 @@ public class IconExpanderDrawerListener implements DrawerListener {
             return;
         }
         // 0 (closed) to 1 (open)
+        // Max size = drawer_width_open  (300dp)
+        // Min size = icon_height_closed  (100dp)
+        // Min rot = 360
+        // Min rot = 0
+        // 0%      33%     100%
+        // 0dp     100dp   300dp
+        // ??      0(o)    360(o)
+        // ?? ==> -180
+
         int visibleDrawerWidth = (int)(slideOffset * mOpenDrawerWidth);
         // The drawerFrame top padding is minimum of icon_height_closed.  Once the drawer
         // width exceeds that value, then the padding increases in height so that
@@ -47,10 +59,8 @@ public class IconExpanderDrawerListener implements DrawerListener {
         int topPadding = (visibleDrawerWidth < mMinSpacerHeight) ? mMinSpacerHeight : visibleDrawerWidth;
         mDrawerContainer.setPadding(0, topPadding, 0, 0);
 
-        mTwirlyView.setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
-        mTwirlyView.setBackgroundVisibility(slideOffset);
+        mTwirlingImage.setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
+        mTwirlingImage.setBackgroundVisibility(slideOffset);
     }
-
-    //         mIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.alogo_claire_scaled, null));
 
 }

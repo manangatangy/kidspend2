@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.wolfie.kidspend2.R;
+import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class TwirlyView extends RelativeLayout {
+public class TwirlingImage extends RelativeLayout {
 
     @BindView(R.id.icon_image_view)
     public ImageView mIconImageView;
@@ -24,22 +26,22 @@ public class TwirlyView extends RelativeLayout {
 
     protected Unbinder unbinder;
 
-    public TwirlyView(Context context) {
+    public TwirlingImage(Context context) {
         super(context);
         initView();
     }
 
-    public TwirlyView(Context context, AttributeSet attrs) {
+    public TwirlingImage(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
-    public TwirlyView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TwirlingImage(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }
 
-    public TwirlyView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TwirlingImage(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView();
     }
@@ -54,16 +56,23 @@ public class TwirlyView extends RelativeLayout {
         unbinder = ButterKnife.bind(this);
     }
 
-    public void setIconImageDrawable(@DrawableRes int drawableRes) {
-        mIconImageView.setImageDrawable(getResources().getDrawable(drawableRes, null));
+    public void updateIcon(Girl girl, @ImageShade int imageShade) {
+        @DrawableRes int resourceId = girl.getIconResourceId(imageShade);
+        mIconImageView.setImageDrawable(getResources().getDrawable(resourceId, null));
+        // TODO change the black/white backing view too.
     }
+
+//    public void setIconImageDrawable(@DrawableRes int drawableRes) {
+//        mIconImageView.setImageDrawable(getResources().getDrawable(drawableRes, null));
+//    }
 
     public void setIconImageViewLevel(float level) {                // 0 to 10000
         mIconImageView.setImageLevel((int)level);
     }
 
     public void setBackgroundVisibility(float slideOffset) {        // 0 to 1.0
-        // Once the drawer is fully open, then blacken the background.
+        // Once the drawer is fully open, then blacken/whiten the background.
         mIconBackgroundView.setVisibility((slideOffset == 1) ? View.VISIBLE : View.GONE);
     }
+
 }

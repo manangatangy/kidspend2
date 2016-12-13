@@ -28,22 +28,11 @@
             android:paddingTop="@dimen/icon_height_closed"
             >
             <!-- DrawerFragment inflates here -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-                <View
-                    android:id="@+id/temp_filler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorAccent"
-                    />
-            </LinearLayout>
         </FrameLayout>
     </android.support.v4.widget.DrawerLayout>
 
-    <com.wolfie.kidspend2.view.TwirlyView
-        android:id="@+id/twirly_view"
+    <com.wolfie.kidspend2.view.TwirlingImage
+        android:id="@+id/twirling_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -61,6 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-    </com.wolfie.kidspend2.view.TwirlyView>
+    </com.wolfie.kidspend2.view.TwirlingImage>
 
 </RelativeLayout>

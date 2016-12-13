@@ -5,8 +5,9 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
 import com.wolfie.kidspend2.model.Girl;
-import com.wolfie.kidspend2.view.BaseUi;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
+import com.wolfie.kidspend2.view.BaseUi;
 
 public class GirlPresenter extends BasePresenter<GirlUi> {
 
@@ -31,7 +32,8 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
     }
 
     private void setImage() {
-        getUi().setImage(mGirl.getImageResourceId(mImageIndex));
+        getUi().setImage(mGirl.getImageResourceId(mImageIndex),
+                         mGirl.getImageShade(mImageIndex));
     }
 
     @Override
@@ -68,7 +70,7 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
 
         Girl getGirl();
         void setLabel(String text);
-        void setImage(@DrawableRes int resourceId);
+        void setImage(@DrawableRes int resourceId, @ImageShade int imageShade);
 
     }
 

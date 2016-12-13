@@ -3,10 +3,8 @@ package com.wolfie.kidspend2.presenter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.wolfie.kidspend2.view.BaseUi;
 import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
-
-import java.util.List;
+import com.wolfie.kidspend2.view.BaseUi;
 
 public class DrawerPresenter extends BasePresenter<DrawerUi> {
 
@@ -41,13 +39,6 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
         mIsOpen = savedState.getBoolean(KEY_DRAWER_SHOWING, false);
-    }
-
-    public void onDrawerOpened() {
-    }
-
-    public void closeDrawer() {
-        getUi().closeDrawer();
     }
 
     @Override

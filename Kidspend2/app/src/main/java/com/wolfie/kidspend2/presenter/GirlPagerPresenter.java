@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.wolfie.kidspend2.model.Girl;
-import com.wolfie.kidspend2.view.BaseUi;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter.GirlPagerUi;
+import com.wolfie.kidspend2.view.BaseUi;
 import com.wolfie.kidspend2.view.fragment.GirlFragment;
 
 public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
 
+    // TODO save/restore these two fields
     private Girl mGirlCurrent = null;
+    private @ImageShade int mImageShadeCurrent;
 
     public GirlPagerPresenter(GirlPagerUi girlPagerUi) {
         super(girlPagerUi);
@@ -36,7 +39,7 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
 //        mIsOpen = savedState.getBoolean(KEY_DRAWER_SHOWING, false);
     }
 
-    public void pagerSettled(Girl newGirl) {
+    public void onGirlChanged(Girl newGirl) {
         // Inform the previous page's fragment
         // to move to the next image (which will be shown when paging back).
         if (mGirlCurrent != null) {
@@ -44,11 +47,18 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
             girlFragment.bumpImage();
         }
         mGirlCurrent = newGirl;
+        getUi().updateIcon(mGirlCurrent, mImageShadeCurrent);
+    }
+
+    public void onImageShadeChanged(@ImageShade int imageShade) {
+        mImageShadeCurrent = imageShade;
+        getUi().updateIcon(mGirlCurrent, mImageShadeCurrent);
     }
 
     public interface GirlPagerUi extends BaseUi {
 
         GirlFragment getGirlFragment(Girl girl);
+        void updateIcon(Girl girl, @ImageShade int imageShade);
     }
 
 }

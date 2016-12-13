@@ -2,7 +2,6 @@ package com.wolfie.kidspend2.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,10 @@ import android.view.ViewGroup;
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.DrawerPresenter;
 import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
-import com.wolfie.kidspend2.view.activity.KidspendActivity;
-
-import butterknife.OnClick;
 
 public class DrawerFragment extends BaseFragment implements DrawerUi {
 
     private DrawerPresenter mDrawerPresenter;
-    private ActionBarDrawerToggle mToggle;
 
     @Nullable
     @Override
@@ -66,7 +61,7 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
 
 //        mToggle = new ActionBarDrawerToggle(
 //                getEskeyActivity(),
-//                getEskeyActivity().mDrawer,
+//                getEskeyActivity().mDrawerLayout,
 //                getEskeyActivity().mToolbar,
 //                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 //        mToggle.syncState();
@@ -74,26 +69,17 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
 
     @Override
     public boolean isDrawerOpen() {
-//        return getEskeyActivity().mDrawer.isDrawerOpen(Gravity.LEFT);
-        return false;
+        return getKidspendActivity().isDrawerOpen();
     }
 
     @Override
     public void closeDrawer() {
-        if (isDrawerOpen()) {
-//            getEskeyActivity().mDrawer.closeDrawer(Gravity.LEFT);
-        }
+        getKidspendActivity().closeDrawer();
     }
 
     @Override
     public void openDrawer() {
-        if (!isDrawerOpen()) {
-//            getEskeyActivity().mDrawer.openDrawer(Gravity.LEFT);
-        }
-    }
-
-    private KidspendActivity getEskeyActivity() {
-        return (KidspendActivity) mBaseActivity;
+        getKidspendActivity().openDrawer();
     }
 
 }

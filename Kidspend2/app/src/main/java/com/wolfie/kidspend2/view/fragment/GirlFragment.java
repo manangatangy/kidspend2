@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
+import com.wolfie.kidspend2.presenter.GirlPagerPresenter;
 import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
 import com.wolfie.kidspend2.presenter.GirlPresenter;
 import com.wolfie.kidspend2.util.BitmapWorkerTask;
@@ -23,6 +25,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * There sill be instantiated a GirlFragment/GirlPresenter for each {@link Girl} value.
+ * The {@link GirlPresenter} holds the corresponding {@link Girl} instance so that it
+ * knows which one it corresponds to.  Note that the currently selected Girl is determined
+ * by the {@link GirlPagerPresenter}
+ */
 public class GirlFragment extends BaseFragment implements GirlUi {
 
     @BindView(R.id.text_view)
@@ -85,7 +93,7 @@ public class GirlFragment extends BaseFragment implements GirlUi {
     }
 
     @Override
-    public void setImage(@DrawableRes int resourceId) {
+    public void setImage(@DrawableRes int resourceId, @ImageShade int imageShade) {
         // If this is called before the toolbar is laid out then the height will be zero :/
 //        int toolBarHeight = mToolbar.getHeight();
         int toolBarHeight = 0;
@@ -95,5 +103,9 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         Point size = new Point();
         display.getSize(size);
         new BitmapWorkerTask(mImageView, getResources(), resourceId, size.x, size.y);
+
+        // Inform the pager that there's been a change of image background shade.
+        GirlPagerPresenter girlPagerPresenter = findPresenter(GirlPagerFragment.class);
+        girlPagerPresenter.onImageShadeChanged(imageShade);
     }
 }

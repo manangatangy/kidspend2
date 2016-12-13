@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.wolfie.kidspend2.R;
+import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.MainPresenter;
-import com.wolfie.kidspend2.view.IconExpanderDrawerListener;
-import com.wolfie.kidspend2.view.TwirlyView;
+import com.wolfie.kidspend2.view.IconAnimator;
+import com.wolfie.kidspend2.view.TwirlingImage;
+import com.wolfie.kidspend2.view.fragment.DrawerFragment;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
@@ -22,25 +25,13 @@ public class KidspendActivity extends SimpleActivity {
     View mActivityRootView;
 
     @BindView(R.id.drawer_layout)
-    public DrawerLayout mDrawer;
-
-//    @BindView(R.id.drawer_layout_child_1)
-//    public RelativeLayout mMainContentContainer;    // First child holds main content, icon
+    public DrawerLayout mDrawerLayout;
 
     @BindView(R.id.drawer_container)
-    public FrameLayout mDrawerContainer;           // Second child of mDrawer holds nav-menu
+    public FrameLayout mDrawerContainer;           // Second child of mDrawerLayout holds nav-menu
 
-//    @BindView(R.id.icon_frame)
-//    public FrameLayout mIconFrame;
-
-    @BindView(R.id.twirly_view)
-    public TwirlyView mTwirlyView;
-
-//    @BindView(R.id.drawer_frame)
-//    public FrameLayout mDrawerFrame;
-
-//    @BindView(R.id.viewPager)
-//    ViewPager mViewPager;
+    @BindView(R.id.twirling_image)
+    public TwirlingImage mTwirlingImage;
 
     private MainPresenter mMainPresenter;
 
@@ -53,29 +44,21 @@ public class KidspendActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Create the main content fragment into it's container.
-        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
-
-        mTwirlyView.setIconImageDrawable(R.drawable.alogo_claire_scaled);
-
-        IconExpanderDrawerListener drawerListener
-                = new IconExpanderDrawerListener(getApplicationContext(), mDrawerContainer, mTwirlyView);
-        mDrawer.setDrawerListener(drawerListener);
-
-
-        /*
-        Sooo, this version has a hidden all the time, action/tool bar.
-        There is no action bar icon, so there's nothing to click to open/close.
-        The drawer can be dragged, which dims the main content.
-        Furthermore, the drawer has gap above it of "?attr/actionBarSize"
-        (through which the main content can be seen) where the action bar
-        would normally appear.  This was specified in FrameLayout:id/fragment_drawer
-        as android:layout_marginTop="?android:attr/actionBarSize"
-         */
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+
+//        mTwirlingImage.setIconImageDrawable(R.drawable.alogo_claire_scaled);
+        mDrawerLayout.setDrawerListener(new IconAnimator(getApplicationContext(),
+                                                         mDrawerContainer, mTwirlingImage));
+
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
+
+        // Create the drawer fragment into it's container.
+        setupFragment(DrawerFragment.class.getName(), R.id.drawer_container, null);
+
 
 //        mMainPresenter = new MainPresenter(null, getApplicationContext());
 
@@ -87,51 +70,35 @@ public class KidspendActivity extends SimpleActivity {
 //        setBackgroundImage(enumIndex);
 //
 
-//        mViewPager.setAdapter(new GirlPagerAdapter(getSupportFragmentManager(), this));
-
-//
-        // Create the drawer fragment into it's container.
-//        setupFragment(DrawerFragment.class.getName(), R.id.fragment_container_activity_drawer, null);
-
-//        // Create the entry edit (activity sheet) fragment into it's container.
-//        setupFragment(EditFragment.class.getName(), R.id.fragment_container_edit, null);
-//
-//        // Create the login (activity sheet) fragment into it's container.
-//        setupFragment(LoginFragment.class.getName(), R.id.fragment_container_login, null);
-//
-//        // Create the file (activity sheet) fragment into it's container.
-//        setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
-//
-//        // Create the help (activity sheet) fragment into it's container.
-//        setupFragment(HelpFragment.class.getName(), R.id.fragment_container_help, null);
-//
 //        // Create the settings (activity sheet) fragment into it's container.
 //        setupFragment(SettingsFragment.class.getName(), R.id.fragment_container_settings, null);
 
-//        Drawable drawable = getResources().getDrawable(R.drawable.logo_white_nina2, null);
-//        drawable.setBounds(0, 0, (int)(drawable.getIntrinsicWidth()*0.5),
-//                (int)(drawable.getIntrinsicHeight()*0.5));
-//        ScaleDrawable scaleDrawable = new ScaleDrawable(drawable, 0, 1.0f, 1.0f);
-//        scaleDrawable.setLevel(5000);
-//        mIconImageView.setImageDrawable(scaleDrawable.getDrawable());
-
-
-        /*
-        Max size = drawer_width_open  (300dp)
-        Min size = icon_height_closed  (100dp)
-        Min rot = 360
-        Min rot = 0
-        0%      33%     100%
-        0dp     100dp   300dp
-        ??      0(o)    360(o)
-        -180
-         */
-//        mIconImageView.setImageLevel(3333);
-//        mIconImageView.setImageLevel(6666);
-
-
-//        mIconImageView.setImageLevel(10000);
     }
+
+//    public void onGirlChanged(Girl newGirl) {
+//        // Show the specified girl's image
+////        mTwirlingImage.setIconImageDrawable(R.drawable.alogo_claire_scaled);
+//    }
+//
+//    public void onBackgroundChanged(@ImageShade int imageShade) {
+//        // Show the version of the girl image that best shows against the specified image shade.
+////        mTwirlingImage.setIconImageColour(R.drawable.alogo_claire_scaled);
+//    }
+
+//    public void onGirlChanged(Girl newGirl) {
+//        // Show the specified girl's image
+//        mTwirlingImage.setIconImageDrawable(R.drawable.alogo_claire_scaled);
+//    }
+
+    public void updateIcon(Girl girl, @ImageShade int imageShade) {
+        mTwirlingImage.updateIcon(girl, imageShade);
+    }
+
+//    public void onImageShadeChanged(@ImageShade int imageShade) {
+//        // Show the version of the girl image that best shows against the specified image shade.
+////        mTwirlingImage.setIconImageColour(R.drawable.alogo_claire_scaled);
+//    }
+
 
     @Override
     @LayoutRes
@@ -144,30 +111,20 @@ public class KidspendActivity extends SimpleActivity {
         return mActivityRootView;
     }
 
-
-//    // loads the main content fragment
-//    public Fragment setupNavigationFragment(Class fragmentClass, int screenTitle) {
-//        int fragmentLayoutResourceId = R.id.fragment_container_main;
-//        String fragmentClassName = fragmentClass.getName();
-//        Fragment fragment = setupFragment(fragmentClassName, fragmentLayoutResourceId, null);
-////        setupTitle(getString(screenTitle));
-//        return fragment;
-//    }
-
     public void openDrawer() {
-        if (mDrawer != null) {
-            mDrawer.openDrawer(mDrawerContainer);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.openDrawer(mDrawerContainer);
         }
     }
 
     public void closeDrawer() {
-        if (mDrawer != null) {
-            mDrawer.closeDrawer(mDrawerContainer);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mDrawerContainer);
         }
     }
 
     public boolean isDrawerOpen() {
-        return mDrawer != null && mDrawer.isDrawerOpen(mDrawerContainer);
+        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerContainer);
     }
 
     @Override
