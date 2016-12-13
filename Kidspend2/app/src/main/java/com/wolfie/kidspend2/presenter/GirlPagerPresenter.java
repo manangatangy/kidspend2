@@ -11,9 +11,9 @@ import com.wolfie.kidspend2.view.fragment.GirlFragment;
 
 public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
 
-    // TODO save/restore these two fields
+    // This member isn't saved/restored because the ViewPager will know
+    // which is the current GirlFragment, and restores them correctly.
     private Girl mGirlCurrent = null;
-    private @ImageShade int mImageShadeCurrent;
 
     public GirlPagerPresenter(GirlPagerUi girlPagerUi) {
         super(girlPagerUi);
@@ -31,34 +31,31 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
 
     @Override
     public void onSaveState(Bundle outState) {
-//        outState.putBoolean(KEY_DRAWER_SHOWING, mIsOpen);
+//        outState.putString(KEY_GIRL_PAGER_NAME, mGirlCurrent.name());
     }
 
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
-//        mIsOpen = savedState.getBoolean(KEY_DRAWER_SHOWING, false);
+        if (savedState != null) {
+//            mGirlCurrent = Girl.valueOf(savedState.getString(KEY_GIRL_PAGER_NAME));
+        }
     }
 
     public void onGirlChanged(Girl newGirl) {
-        // Inform the previous page's fragment
-        // to move to the next image (which will be shown when paging back).
+        // Inform the previous page's fragment it is no longer showing.
         if (mGirlCurrent != null) {
+            // This GirlFragment is being paged out of view.
             GirlFragment girlFragment = getUi().getGirlFragment(mGirlCurrent);
-            girlFragment.bumpImage();
+            girlFragment.onHidden();
         }
+        // This GirlFragment is being paged into view.
         mGirlCurrent = newGirl;
-        getUi().updateIcon(mGirlCurrent, mImageShadeCurrent);
-    }
-
-    public void onImageShadeChanged(@ImageShade int imageShade) {
-        mImageShadeCurrent = imageShade;
-        getUi().updateIcon(mGirlCurrent, mImageShadeCurrent);
+        GirlFragment girlFragment = getUi().getGirlFragment(mGirlCurrent);
+        girlFragment.onShowing();
     }
 
     public interface GirlPagerUi extends BaseUi {
-
         GirlFragment getGirlFragment(Girl girl);
-        void updateIcon(Girl girl, @ImageShade int imageShade);
     }
 
 }

@@ -11,8 +11,8 @@ import com.wolfie.kidspend2.R;
 
 public enum ImageCollection {
 
-//    CLAIRE00(Girl.CLAIRE, R.drawable.claire_00),
-    CLAIRE00(Girl.CLAIRE, R.drawable.android_logo_1, ImageShade.DARK),
+    CLAIRE00(Girl.CLAIRE, R.drawable.claire_00, ImageShade.DARK),
+//    CLAIRE00(Girl.CLAIRE, R.drawable.android_logo_1, ImageShade.DARK),
 
     CLAIRE01(Girl.CLAIRE, R.drawable.claire_01, ImageShade.DARK),
     CLAIRE02(Girl.CLAIRE, R.drawable.claire_02, ImageShade.DARK),
@@ -32,8 +32,8 @@ public enum ImageCollection {
     CLAIRE16(Girl.CLAIRE, R.drawable.claire_16, ImageShade.DARK),
     CLAIRE17(Girl.CLAIRE, R.drawable.claire_17, ImageShade.DARK),
 
-//    NINA00(Girl.NINA, R.drawable.nina_00),
-    NINA00(Girl.NINA, R.drawable.android_logo_2, ImageShade.DARK),
+    NINA00(Girl.NINA, R.drawable.nina_00, ImageShade.DARK),
+//    NINA00(Girl.NINA, R.drawable.android_logo_2, ImageShade.DARK),
 
     NINA01(Girl.NINA, R.drawable.nina_01, ImageShade.DARK),
     NINA02(Girl.NINA, R.drawable.nina_02, ImageShade.DARK),
@@ -56,8 +56,8 @@ public enum ImageCollection {
     NINA19(Girl.NINA, R.drawable.nina_19, ImageShade.DARK),
     NINA20(Girl.NINA, R.drawable.nina_20, ImageShade.DARK),
 
-//    RACHEL00(Girl.RACHEL, R.drawable.rachel_00),
-    RACHEL00(Girl.RACHEL, R.drawable.android_logo_3, ImageShade.DARK),
+    RACHEL00(Girl.RACHEL, R.drawable.rachel_00, ImageShade.DARK),
+//    RACHEL00(Girl.RACHEL, R.drawable.android_logo_3, ImageShade.DARK),
 
     RACHEL01(Girl.RACHEL, R.drawable.rachel_01, ImageShade.DARK),
     RACHEL02(Girl.RACHEL, R.drawable.rachel_02, ImageShade.DARK),

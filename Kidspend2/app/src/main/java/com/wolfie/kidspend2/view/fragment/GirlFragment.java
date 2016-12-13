@@ -78,8 +78,12 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         return view;
     }
 
-    public void bumpImage() {
-        mGirlPresenter.bumpImage();
+    public void onShowing() {
+        getPresenter().onShowing();
+    }
+
+    public void onHidden() {
+        getPresenter().onHidden();
     }
 
     @Override
@@ -93,7 +97,7 @@ public class GirlFragment extends BaseFragment implements GirlUi {
     }
 
     @Override
-    public void setImage(@DrawableRes int resourceId, @ImageShade int imageShade) {
+    public void setPageImage(@DrawableRes int resourceId) {
         // If this is called before the toolbar is laid out then the height will be zero :/
 //        int toolBarHeight = mToolbar.getHeight();
         int toolBarHeight = 0;
@@ -103,9 +107,13 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         Point size = new Point();
         display.getSize(size);
         new BitmapWorkerTask(mImageView, getResources(), resourceId, size.x, size.y);
-
-        // Inform the pager that there's been a change of image background shade.
-        GirlPagerPresenter girlPagerPresenter = findPresenter(GirlPagerFragment.class);
-        girlPagerPresenter.onImageShadeChanged(imageShade);
     }
+
+    @Override
+    public void updateIcon(Girl girl, @ImageShade int imageShade) {
+        // Inform the main activity (which owns the twirling icon)
+        // that there's been a change of girl or image background shade.
+        getKidspendActivity().updateIcon(girl, imageShade);
+    }
+
 }

@@ -17,7 +17,6 @@ import com.wolfie.kidspend2.view.adapter.GirlPagerAdapter;
 
 import butterknife.BindView;
 
-
 public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
 
     @BindView(R.id.viewPager)
@@ -66,8 +65,8 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE && mSelectedPosition != mCurrentSettledPosition) {
                     // We have settled to a position (mSelectedPosition) that is different from
-                    // what we last told the GirlPagerPresenter.  Therefore, update the presenter.
-                    // Also inform the Activity of a change in Girl.
+                    // what we last told the GirlPagerPresenter.  Therefore inform the presenter
+                    // of a change in Girl.
                     Girl newGirl = Girl.values()[mSelectedPosition];
                     mGirlPagerPresenter.onGirlChanged(newGirl);
                     mCurrentSettledPosition = mSelectedPosition;
@@ -91,15 +90,22 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
     }
 
     @Override
-    public void updateIcon(Girl girl, @ImageShade int imageShade) {
-        // Inform the main activity (which owns the twirling icon)
-        // that there's been a change of girl or image background shade.
-        getKidspendActivity().updateIcon(girl, imageShade);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getView().post(new Runnable() {
+            @Override
+            public void run() {
+                // Initialise the GirlPagerPresenter.mGirlCurrent member with the current page.
+                // Note that the ViewPager will be restored with the correct saved current
+                // GirlFragment, and so no further state need be saved in the Presenter.
+                // This has to be delayed until the GirlFragments are attached to the activity
+                // so that getGirlFragment() can find them.
+                int currentItem = mViewPager.getCurrentItem();
+                Girl girl = Girl.values()[currentItem];
+                GirlFragment girlFragment = getGirlFragment(girl);
+                girlFragment.onShowing();
+            }
+        });
     }
 
 }

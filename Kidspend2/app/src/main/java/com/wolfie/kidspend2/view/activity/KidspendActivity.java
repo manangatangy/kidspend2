@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.model.Girl;
 import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
+import com.wolfie.kidspend2.presenter.GirlPagerPresenter;
 import com.wolfie.kidspend2.presenter.MainPresenter;
 import com.wolfie.kidspend2.view.IconAnimator;
 import com.wolfie.kidspend2.view.TwirlingImage;
@@ -49,7 +50,6 @@ public class KidspendActivity extends SimpleActivity {
             actionBar.hide();
         }
 
-//        mTwirlingImage.setIconImageDrawable(R.drawable.alogo_claire_scaled);
         mDrawerLayout.setDrawerListener(new IconAnimator(getApplicationContext(),
                                                          mDrawerContainer, mTwirlingImage));
 
@@ -58,7 +58,6 @@ public class KidspendActivity extends SimpleActivity {
 
         // Create the drawer fragment into it's container.
         setupFragment(DrawerFragment.class.getName(), R.id.drawer_container, null);
-
 
 //        mMainPresenter = new MainPresenter(null, getApplicationContext());
 
@@ -93,12 +92,6 @@ public class KidspendActivity extends SimpleActivity {
     public void updateIcon(Girl girl, @ImageShade int imageShade) {
         mTwirlingImage.updateIcon(girl, imageShade);
     }
-
-//    public void onImageShadeChanged(@ImageShade int imageShade) {
-//        // Show the version of the girl image that best shows against the specified image shade.
-////        mTwirlingImage.setIconImageColour(R.drawable.alogo_claire_scaled);
-//    }
-
 
     @Override
     @LayoutRes

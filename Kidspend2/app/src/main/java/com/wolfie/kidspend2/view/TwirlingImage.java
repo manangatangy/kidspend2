@@ -24,6 +24,8 @@ public class TwirlingImage extends RelativeLayout {
     @BindView(R.id.icon_background_view)
     public View mIconBackgroundView;
 
+    private @DrawableRes int mResourceId = -1;
+
     protected Unbinder unbinder;
 
     public TwirlingImage(Context context) {
@@ -54,17 +56,22 @@ public class TwirlingImage extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         unbinder = ButterKnife.bind(this);
+
+        // Init the icon for closed
+        float slideOffset = 0;
+        setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
+        setBackgroundVisibility(slideOffset);
     }
 
     public void updateIcon(Girl girl, @ImageShade int imageShade) {
         @DrawableRes int resourceId = girl.getIconResourceId(imageShade);
-        mIconImageView.setImageDrawable(getResources().getDrawable(resourceId, null));
+        if (mResourceId != resourceId) {
+            // Only set the drawable if it's changed.
+            mResourceId = resourceId;
+            mIconImageView.setImageDrawable(getResources().getDrawable(mResourceId, null));
+        }
         // TODO change the black/white backing view too.
     }
-
-//    public void setIconImageDrawable(@DrawableRes int drawableRes) {
-//        mIconImageView.setImageDrawable(getResources().getDrawable(drawableRes, null));
-//    }
 
     public void setIconImageViewLevel(float level) {                // 0 to 10000
         mIconImageView.setImageLevel((int)level);
