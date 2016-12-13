@@ -2,21 +2,16 @@ package com.wolfie.kidspend2.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.MainPresenter;
 import com.wolfie.kidspend2.view.IconExpanderDrawerListener;
 import com.wolfie.kidspend2.view.TwirlyView;
-import com.wolfie.kidspend2.view.adapter.GirlPagerAdapter;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
@@ -32,7 +27,7 @@ public class KidspendActivity extends SimpleActivity {
 //    @BindView(R.id.drawer_layout_child_1)
 //    public RelativeLayout mMainContentContainer;    // First child holds main content, icon
 
-    @BindView(R.id.drawer_layout_child_2)
+    @BindView(R.id.drawer_container)
     public FrameLayout mDrawerContainer;           // Second child of mDrawer holds nav-menu
 
 //    @BindView(R.id.icon_frame)

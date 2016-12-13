@@ -2,16 +2,14 @@ package com.wolfie.kidspend2.view;
 
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.wolfie.kidspend2.R;
 
 public class IconExpanderDrawerListener implements DrawerListener {
 
-    private FrameLayout mDrawerFrame;
+    private FrameLayout mDrawerContainer;
     private TwirlyView mTwirlyView;
 
     private float mOpenDrawerWidth;
@@ -29,8 +27,8 @@ public class IconExpanderDrawerListener implements DrawerListener {
     public void onDrawerStateChanged(int newState) {
     }
 
-    public IconExpanderDrawerListener(Context context, FrameLayout drawerFrame, TwirlyView twirlyView) {
-        mDrawerFrame = drawerFrame;
+    public IconExpanderDrawerListener(Context context, FrameLayout drawerContainer, TwirlyView twirlyView) {
+        mDrawerContainer = drawerContainer;
         mTwirlyView = twirlyView;
         mOpenDrawerWidth = (float)context.getResources().getDimensionPixelSize(R.dimen.drawer_width_open);
         mMinSpacerHeight = context.getResources().getDimensionPixelSize(R.dimen.icon_height_closed);
@@ -38,7 +36,7 @@ public class IconExpanderDrawerListener implements DrawerListener {
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
-        if (mDrawerFrame == null) {
+        if (mDrawerContainer == null) {
             return;
         }
         // 0 (closed) to 1 (open)
@@ -47,7 +45,7 @@ public class IconExpanderDrawerListener implements DrawerListener {
         // width exceeds that value, then the padding increases in height so that
         // it is square.
         int topPadding = (visibleDrawerWidth < mMinSpacerHeight) ? mMinSpacerHeight : visibleDrawerWidth;
-        mDrawerFrame.setPadding(0, topPadding, 0, 0);
+        mDrawerContainer.setPadding(0, topPadding, 0, 0);
 
         mTwirlyView.setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
         mTwirlyView.setBackgroundVisibility(slideOffset);

@@ -20,19 +20,25 @@
             <!-- GirlPagerFragment inflates here -->
         </FrameLayout>
         <FrameLayout
-            android:id="@+id/drawer_layout_child_2"
+            android:id="@+id/drawer_container"
             android:layout_width="@dimen/drawer_width_open"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@android:color/transparent"
             android:paddingTop="@dimen/icon_height_closed"
             >
-            <View
-                android:id="@+id/temp_filler"
+            <!-- DrawerFragment inflates here -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent"
-                />
+                >
+                <View
+                    android:id="@+id/temp_filler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"
+                    />
+            </LinearLayout>
         </FrameLayout>
     </android.support.v4.widget.DrawerLayout>
 
