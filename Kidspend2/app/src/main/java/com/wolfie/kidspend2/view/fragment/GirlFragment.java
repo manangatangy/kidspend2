@@ -33,6 +33,8 @@ import butterknife.OnClick;
  */
 public class GirlFragment extends BaseFragment implements GirlUi {
 
+    public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
+
     @BindView(R.id.text_view)
     TextView mTextView;
 
@@ -82,13 +84,10 @@ public class GirlFragment extends BaseFragment implements GirlUi {
         getPresenter().onShowing();
     }
 
-    public void onHidden() {
-        getPresenter().onHidden();
-    }
-
     @Override
     public Girl getGirl() {
-        return Girl.valueOf(getArguments().getString(GirlPresenter.KEY_GIRL_NAME));
+        // Rely on the Girl state always being available in the Fragment args
+        return Girl.valueOf(getArguments().getString(GirlFragment.KEY_GIRL_NAME));
     }
 
     @Override

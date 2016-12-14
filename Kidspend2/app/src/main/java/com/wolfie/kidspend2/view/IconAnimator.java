@@ -42,7 +42,6 @@ public class IconAnimator implements DrawerListener {
         if (mDrawerContainer == null) {
             return;
         }
-        // 0 (closed) to 1 (open)
         // Max size = drawer_width_open  (300dp)
         // Min size = icon_height_closed  (100dp)
         // Min rot = 360
@@ -59,8 +58,17 @@ public class IconAnimator implements DrawerListener {
         int topPadding = (visibleDrawerWidth < mMinSpacerHeight) ? mMinSpacerHeight : visibleDrawerWidth;
         mDrawerContainer.setPadding(0, topPadding, 0, 0);
 
-        mTwirlingImage.setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
+        mTwirlingImage.setIconImageViewLevel(slideOffsetToIconViewLevel(slideOffset));
         mTwirlingImage.setBackgroundVisibility(slideOffset);
     }
+
+    public static int slideOffsetToIconViewLevel(float slideOffset) {
+        // slideOffset: 0 (closed) to 1 (open)
+        // viewLevel: 3333 (closed) to 10000 (open), the 3333 corresponds to 100dp/300dp
+        return (int)(3333 + (float)(6666) * slideOffset);
+    }
+
+    public static final float SLIDE_OFFSET_CLOSED = 0;
+    public static final float SLIDE_OFFSET_OPEN = 1;
 
 }

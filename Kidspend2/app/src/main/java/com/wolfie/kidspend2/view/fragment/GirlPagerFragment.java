@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.model.Girl;
-import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter;
 import com.wolfie.kidspend2.presenter.GirlPagerPresenter.GirlPagerUi;
 import com.wolfie.kidspend2.view.adapter.GirlPagerAdapter;
@@ -95,17 +94,27 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
         getView().post(new Runnable() {
             @Override
             public void run() {
-                // Initialise the GirlPagerPresenter.mGirlCurrent member with the current page.
-                // Note that the ViewPager will be restored with the correct saved current
-                // GirlFragment, and so no further state need be saved in the Presenter.
+                // Initialise the currently showing GirlFragment.
+                // Note that the ViewPager will be restored with the correctly saved current
+                // GirlFragment, and so no further state need be saved in the GirlPagerPresenter.
                 // This has to be delayed until the GirlFragments are attached to the activity
                 // so that getGirlFragment() can find them.
-                int currentItem = mViewPager.getCurrentItem();
-                Girl girl = Girl.values()[currentItem];
+                Girl girl = getCurrentGirl();
                 GirlFragment girlFragment = getGirlFragment(girl);
                 girlFragment.onShowing();
             }
         });
+    }
+
+    /**
+     * We use the ViewPager to hold (and save/restore) the currently showing GirlFragment.
+     * This means that the GirlPagerPresenter doesn't have to keep track of this state
+     * @return the GirlFragment currently showing in the ViewPager.
+     */
+    @Override
+    public Girl getCurrentGirl() {
+        int currentItem = mViewPager.getCurrentItem();
+        return Girl.values()[currentItem];
     }
 
 }

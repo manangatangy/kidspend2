@@ -16,6 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.wolfie.kidspend2.view.IconAnimator.SLIDE_OFFSET_CLOSED;
+import static com.wolfie.kidspend2.view.IconAnimator.SLIDE_OFFSET_OPEN;
+
 public class TwirlingImage extends RelativeLayout {
 
     @BindView(R.id.icon_image_view)
@@ -58,9 +61,8 @@ public class TwirlingImage extends RelativeLayout {
         unbinder = ButterKnife.bind(this);
 
         // Init the icon for closed
-        float slideOffset = 0;
-        setIconImageViewLevel(3333 + (float)(6666) * slideOffset);
-        setBackgroundVisibility(slideOffset);
+        setIconImageViewLevel(IMAGE_LEVEL_CLOSED);
+        setBackgroundVisibility(0);
     }
 
     public void updateIcon(Girl girl, @ImageShade int imageShade) {
@@ -73,13 +75,17 @@ public class TwirlingImage extends RelativeLayout {
         // TODO change the black/white backing view too.
     }
 
-    public void setIconImageViewLevel(float level) {                // 0 to 10000
-        mIconImageView.setImageLevel((int)level);
+    public void setIconImageViewLevel(int level) {                // 0 to 10000
+        mIconImageView.setImageLevel(level);
     }
 
     public void setBackgroundVisibility(float slideOffset) {        // 0 to 1.0
         // Once the drawer is fully open, then blacken/whiten the background.
         mIconBackgroundView.setVisibility((slideOffset == 1) ? View.VISIBLE : View.GONE);
     }
+
+    // These values are for use with setIconImageViewLevel()
+    public static final int IMAGE_LEVEL_CLOSED = IconAnimator.slideOffsetToIconViewLevel(SLIDE_OFFSET_CLOSED);
+    public static final int IMAGE_LEVEL_OPEN = IconAnimator.slideOffsetToIconViewLevel(SLIDE_OFFSET_OPEN);
 
 }

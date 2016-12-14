@@ -3,6 +3,7 @@ package com.wolfie.kidspend2.presenter;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.wolfie.kidspend2.model.Girl;
 import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
@@ -11,11 +12,10 @@ import com.wolfie.kidspend2.view.BaseUi;
 
 public class GirlPresenter extends BasePresenter<GirlUi> {
 
-    // Each GirlPresenter needs to save/restore its Girl and imageIndex
-    public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
+    // Each GirlPresenter will save/restore its imageIndex only and the actual
+    // Girl (for this instance) is always retrieved from the GirlFragment args.
     public static final String KEY_GIRL_IMAGE_INDEX = "KEY_GIRL_IMAGE_INDEX";
 
-    private Girl mGirl;
     private int mImageIndex = 0;    // Index into the Girl.mImageIds.
 
     public GirlPresenter(GirlUi girlUi) {
@@ -25,31 +25,30 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
     @Override
     public void resume() {
         super.resume();
-        if (mGirl == null) {
-            mGirl = getUi().getGirl();      // As passed from GirlPagerAdapter
+        Girl girl = getUi().getGirl();
+        if (girl == null) {
+            Log.d("Kidspend", "GirlPresenter.resume(): mGirl is null ! uh-oh");
         }
-        getUi().setLabel(mGirl.name());
-        getUi().setPageImage(mGirl.getImageResourceId(mImageIndex));
-        // Note that resume may be called although this instance is not currently showing.
+        getUi().setLabel(girl.name());
+        getUi().setPageImage(girl.getImageResourceId(mImageIndex));
+        // Note that resume may be called although this instance is not currently showing
+        // so we should not call updateIcon here; use the onShowing protocol instead.
     }
 
     public void onShowing() {
         // This instance is now currently showing.
         // Update the icon using the current image's shade.
-        getUi().updateIcon(mGirl, mGirl.getImageShade(mImageIndex));
-        // TODO set timed calls to mGirlPresenter.bumpImage();
-    }
-
-    public void onHidden() {
-        // TODO stop timed calls to bump
+        Girl girl = getUi().getGirl();
+        getUi().updateIcon(girl, girl.getImageShade(mImageIndex));
     }
 
     public void bumpImage() {
-        if (++mImageIndex >= mGirl.getImageCount()) {
+        Girl girl = getUi().getGirl();
+        if (++mImageIndex >= girl.getImageCount()) {
             mImageIndex = 0;
         }
-        getUi().setPageImage(mGirl.getImageResourceId(mImageIndex));
-        getUi().updateIcon(mGirl, mGirl.getImageShade(mImageIndex));
+        getUi().setPageImage(girl.getImageResourceId(mImageIndex));
+        getUi().updateIcon(girl, girl.getImageShade(mImageIndex));
     }
 
     @Override
@@ -59,22 +58,12 @@ public class GirlPresenter extends BasePresenter<GirlUi> {
 
     @Override
     public void onSaveState(Bundle outState) {
-        outState.putString(KEY_GIRL_NAME, mGirl.name());
         outState.putInt(KEY_GIRL_IMAGE_INDEX, mImageIndex);
     }
 
-    // TODO - this happened when backgrounding/resume with the drawer open
-    // note that the icon doesnt resore to the full size
-    /*
-     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String com.wolfie.kidspend2.model.Girl.name()' on a null object reference
-                                                                        at com.wolfie.kidspend2.presenter.GirlPresenter.onSaveState(GirlPresenter.java:61)
-                                                                        at com.wolfie.kidspend2.view.fragment.BaseFragment.onSaveInstanceState(BaseFragment.java:78)
-
-     */
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
         if (savedState != null) {
-            mGirl = Girl.valueOf(savedState.getString(KEY_GIRL_NAME));
             mImageIndex = savedState.getInt(KEY_GIRL_IMAGE_INDEX);
         }
     }
