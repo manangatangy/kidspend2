@@ -46,7 +46,7 @@ public class Source {
     List<Spend> read() {
         List<Spend> spends = new ArrayList<>();
         Cursor cursor = mDatabase.query(MetaData.SPENDS_TABLE, MetaData.SPENDS_ALL_COLUMNS, null,
-                                        null, null, null, MetaData.SPENDS_CREATED);
+                                        null, null, null, MetaData.SPENDS_ID);
         if (cursor != null && cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Spend spend = Spend.from(cursor);

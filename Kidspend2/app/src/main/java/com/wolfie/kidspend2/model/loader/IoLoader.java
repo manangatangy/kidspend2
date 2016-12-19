@@ -15,11 +15,15 @@ import com.wolfie.kidspend2.model.IoHelper;
 import com.wolfie.kidspend2.model.Spend;
 import com.wolfie.kidspend2.model.database.Source;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -64,13 +68,8 @@ public class IoLoader {
         }
         @Override
         public IoResult runInBackground(File file) {
-            /*
-
-            DataSet dataSet = mDataSource.read();
-            List<Entry> encryptedEntries = dataSet.getEntries();
-
-            String json = new IoHelper(mMediumCrypter).export(encryptedEntries, mMasterData);
-
+            List<Spend> spends = mDataSource.read();
+            String json = new IoHelper().export(spends);
             IoResult ioResult = null;
             FileOutputStream fos = null;
             BufferedWriter bw = null;
@@ -78,9 +77,7 @@ public class IoLoader {
                 fos = new FileOutputStream(file);
                 bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
                 bw.write(json);
-                ioResult = new SuccessResult((mAsClearText ? "Exported " : "Backed up ")
-                                                     + encryptedEntries.size() + " entries from "
-                                                     + (mAsClearText ? "cleartext" : "ciphertext"));
+                ioResult = new SuccessResult("Exported " + spends.size() + " spends");
             } catch (FileNotFoundException fnfe) {
                 return new FailureResult("FileNotFound opening\n" + file.getName());
             } catch (UnsupportedEncodingException usce) {
@@ -101,8 +98,6 @@ public class IoLoader {
                 }
             }
             return ioResult;
-             */
-            return null;
         }
     }
 
@@ -123,7 +118,7 @@ public class IoLoader {
                 for (int i = 0; i < spends.size(); i++) {
                     mDataSource.insert(spends.get(i));
                 }
-                ioResult = new SuccessResult("Imported" + spends.size() + " spends");
+                ioResult = new SuccessResult("Imported " + spends.size() + " spends");
             } catch (FileNotFoundException fnfe) {
                 return new FailureResult("FileNotFound opening\n" + file.getPath());
             } catch (JsonIOException jioe) {

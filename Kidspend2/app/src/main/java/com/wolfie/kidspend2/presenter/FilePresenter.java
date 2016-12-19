@@ -202,20 +202,16 @@ public class FilePresenter extends BasePresenter<FileUi>
         getUi().clearErrorMessage();
 
         File ioFile = getFile();
+
         MainPresenter mainPresenter = getUi().findPresenter(null);
-
-        IoLoader ioLoader = mainPresenter.getIoLoader();
-        ioLoader.inport(ioFile, this);
-
-//        MainPresenter mainPresenter = getUi().findPresenter(null);
-//        if (mainPresenter != null) {
-//            IoLoader ioLoader = mainPresenter.makeIoLoader(loginPresenter.getMediumCrypter());
-//            if (mIsExporting) {
-//                ioLoader.export(masterData, ioFile, this);
-//            } else {
-//                ioLoader.inport(password, getUi().isOverwrite(), ioFile, this);
-//            }
-//        }
+        if (mainPresenter != null) {
+            IoLoader ioLoader = mainPresenter.getIoLoader();
+            if (mIsExporting) {
+                ioLoader.export(ioFile, this);
+            } else {
+                ioLoader.inport(ioFile, this);
+            }
+        }
     }
 
     @Override
