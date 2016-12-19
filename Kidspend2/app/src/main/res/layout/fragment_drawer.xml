@@ -4,11 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorAccent"
     >
-    <View
-        android:id="@+id/temp_filler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+    <TextView
+        android:id="@+id/menu_item_settings"
+        style="@style/MenuItem"
+        android:text="@string/menu_item_settings"
+        />
+    <TextView
+        android:id="@+id/menu_item_export"
+        style="@style/MenuItem"
+        android:text="@string/menu_item_export"
+        />
+    <TextView
+        android:id="@+id/menu_item_import"
+        style="@style/MenuItem"
+        android:text="@string/menu_item_import"
         />
 </LinearLayout>

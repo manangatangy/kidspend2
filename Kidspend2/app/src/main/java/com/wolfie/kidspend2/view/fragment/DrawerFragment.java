@@ -10,6 +10,8 @@ import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.DrawerPresenter;
 import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
 
+import butterknife.OnClick;
+
 public class DrawerFragment extends BaseFragment implements DrawerUi {
 
     private DrawerPresenter mDrawerPresenter;
@@ -57,4 +59,16 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
         getKidspendActivity().openDrawer();
     }
 
+    @OnClick(R.id.menu_item_settings)
+    void onMenuSettings() {
+        mDrawerPresenter.onMenuSettingsClick();
+    }
+    @OnClick(R.id.menu_item_export)
+    void onMenuExport() {
+        mDrawerPresenter.onMenuExportClick();
+    }
+    @OnClick(R.id.menu_item_import)
+    void onMenuImport() {
+        mDrawerPresenter.onMenuImportClick();
+    }
 }

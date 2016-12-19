@@ -52,4 +52,11 @@
             />
     </com.wolfie.kidspend2.view.TwirlingImage>
 
+    <!-- Content file view (populated by action sheet file fragment)-->
+    <FrameLayout
+        android:id="@+id/fragment_container_file"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </RelativeLayout>

@@ -17,6 +17,7 @@ import com.wolfie.kidspend2.presenter.MainPresenter;
 import com.wolfie.kidspend2.view.IconAnimator;
 import com.wolfie.kidspend2.view.TwirlingImage;
 import com.wolfie.kidspend2.view.fragment.DrawerFragment;
+import com.wolfie.kidspend2.view.fragment.FileFragment;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
@@ -86,7 +87,10 @@ public class KidspendActivity extends SimpleActivity {
         // Create the drawer fragment into it's container.
         setupFragment(DrawerFragment.class.getName(), R.id.drawer_container, null);
 
-//        mMainPresenter = new MainPresenter(null, getApplicationContext());
+        // Create the file (activity sheet) fragment into it's container.
+        setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
+
+        mMainPresenter = new MainPresenter(null, getApplicationContext());
 
 //        // Set the initial values for some settings.  May be changed later by SettingsPresenter
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
