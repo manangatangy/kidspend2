@@ -16,20 +16,37 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <com.wolfie.kidspend2.view.adapter.ScrollListeningRecyclerView
-            android:id="@+id/recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
+            android:layout_height="@dimen/icon_height_closed"
+            android:paddingLeft="@dimen/icon_height_closed"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/heading_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:background="@android:color/transparent"
+                android:text="- 24 DEC 2011"
+                android:layout_marginRight="30dp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/sticky_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <include layout="@layout/view_list_heading"/>
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_entry_fab"

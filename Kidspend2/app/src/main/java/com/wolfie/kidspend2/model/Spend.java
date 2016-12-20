@@ -52,6 +52,18 @@ public class Spend {
         return spend;
     }
 
+    public void trim() {
+        if (mGirl != null) {
+            mGirl = mGirl.trim();
+        }
+        if (mSpendType != null) {
+            mSpendType = mSpendType.trim();
+        }
+        if (mCreated != null) {
+            mCreated = mCreated.trim();
+        }
+    }
+
     public int getId() {
         return mId;
     }

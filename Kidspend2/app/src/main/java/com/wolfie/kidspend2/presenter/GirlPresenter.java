@@ -5,7 +5,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.android.internal.util.Predicate;
 import com.wolfie.kidspend2.model.DataSet;
 import com.wolfie.kidspend2.model.Girl;
 import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
@@ -119,75 +118,14 @@ public class GirlPresenter extends BasePresenter<GirlUi>
      * Set the new spendType name for filtering, use it with the existing
      * (already loaded) DataSet to build a list of structured spends,
      * and pass to the ui for display. Called by the DrawerPresenter.
+     * SpendType will be null to indicate summary info.
      */
     public void setSpendType(@Nullable String spendType) {
         mSpendType = spendType;
         if (mDataSet != null) {
-            List<SpendGroup> groups = SpendGroup.buildGroups(mSpendType, mDataSet);
-            getUi().showEntries(groups);
+            SpendGroup spendGroup = SpendGroup.buildGroup(mSpendType, mDataSet);
+            getUi().showEntries(spendGroup);
         }
-    }
-
-    private List<SpendGroup> mTempGroups;           // Contains all spends.
-    private List<SpendGroup> mFilteredGroups;       // Contains spends filtered from mTempGroups.
-
-//    @Override
-//    public void onQueryClick() {
-//        // For the duration of the query, the mGroupName and mDataSet are left untouched
-//        // and a new temporary filtered dataSet is used for display.
-//        // As the query text changes, filter the tempGroups --> filteredGroups
-//        // and pass it into showEntries with the searchText
-//
-//        mTempGroups = EntryGroup.buildSingleGroup("Matching entries", mDataSet);
-//        mFilteredGroups = EntryGroup.buildSingleGroup("Matching entries", null);
-//        getUi().showFilteredEntries(mTempGroups, "");       // Will show all all entries, since no search-filtering yet
-//        getUi().setAddEntryVisibility(false);               // Add function disabled.
-//    }
-
-//    @Override
-//    public void onQueryTextChange(String criteria) {
-//        // Use mTempGroups as a flag to indicate if onQueryClick has been called yet
-//        // because onQueryTextChange seems to get called first.
-//        if (mTempGroups != null) {
-//            getUi().hideNoFilteredEntriesWarning();
-//            if (TextUtils.isEmpty(criteria)) {
-//                // Use unfiltered list
-//                getUi().showFilteredEntries(mTempGroups, "");
-//            } else {
-//                // Filter
-//                List<Entry> filteredEntries = mFilteredGroups.get(0).getEntries();
-//                filteredEntries.clear();
-//                Predicate<Entry> predicate = getFilterPredicate(criteria);
-//                for (Entry entry : mTempGroups.get(0).getEntries()) {
-//                    if (predicate.apply(entry)) {
-//                        filteredEntries.add(entry);
-//                    }
-//                }
-//                getUi().showFilteredEntries(mFilteredGroups, criteria);
-//                if (filteredEntries.size() == 0) {
-//                    getUi().showNoFilteredEntriesWarning();
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onQueryClose() {
-//        getUi().hideNoFilteredEntriesWarning();
-//        // Refresh the list with the previous groupName/mDataSet
-//        onCompletion(mDataSet);
-//        getUi().setAddEntryVisibility(true);       // Add function re-enabled.
-//        mTempGroups = null;
-//    }
-
-    protected Predicate<Spend> getFilterPredicate(final String criteria) {
-        return new Predicate<Spend>() {
-            @Override
-            public boolean apply(Spend spend) {
-                return spend.getCreated().toLowerCase().contains(criteria.toLowerCase())
-                        || spend.getAmountAsString().toLowerCase().contains(criteria.toLowerCase());
-            }
-        };
     }
 
     public void onListItemClick(Spend selectedSpend) {
@@ -218,9 +156,8 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         Girl getGirl();
         void setPageImage(@DrawableRes int resourceId);
         void updateIcon(Girl girl, @ImageShade int imageShade);
-        void showEntries(@Nullable List<SpendGroup> groups);
+        void showEntries(SpendGroup spendGroup);
         void setAddEntryVisibility(boolean visible);
-        void hideStickyHeader();
     }
 
 }

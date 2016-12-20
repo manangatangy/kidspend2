@@ -13,6 +13,7 @@ import java.util.List;
 public class SpendGroup {
     private String mHeading;
     private List<Spend> mSpends;
+    private int mTotal;
 
     public SpendGroup(String heading, List<Spend> spends) {
         mHeading = heading;
@@ -25,15 +26,23 @@ public class SpendGroup {
     public List<Spend> getSpends() {
         return mSpends;
     }
+    public int getTotal() {
+        return mTotal;
+    }
 
     /**
-     * Build a list of SpendGroups from the DataSet.  If the spendType is non-null, then return
-     * only a list of only one SpendGroup, whose heading matches the specified heading.
+     * Build a single SpendGroup from the DataSet.  If the spendType is non-null, then return
+     * a the one SpendGroup, whose heading matches the specified heading.  If spendType is null
+     * then make an aggregate list of Spends (with id=-1 so that indicates this Spend cannot be
+     * edited).
      * Assumes the Spends in the DataSet are ordered by spendType name.
      */
-    public static List<SpendGroup> buildGroups(String heading, DataSet dataSet) {
+    public static SpendGroup buildGroup(String heading, DataSet dataSet) {
         List<SpendGroup> groups = new ArrayList<>();
+        List<Spend> aggregate = new ArrayList<>();
         String currentSpendType = null;
+        int aggregateSpendTotal = 0;
+//        int groupTotal = 0;
         List<Spend> currentSpends = null;
         for (Spend spend : dataSet.getSpends()) {
             Log.d("kidspend2", "SpendGroup.buildGroups(): spendType:" + spend.getSpendType() + ", created=" + spend.getCreated());
@@ -43,8 +52,10 @@ public class SpendGroup {
                 if (currentSpends != null && currentSpendType != null) {
                     SpendGroup group = new SpendGroup(currentSpendType, currentSpends);
                     groups.add(group);
+                    aggregate.add(Spend.create(null, currentSpendType, aggregateSpendTotal, null));
                     currentSpends = null;
                     currentSpendType = null;
+                    aggregateSpendTotal = 0;
                 }
             }
             boolean mustCollect = (heading == null || spend.getSpendType().equals(heading));
@@ -56,14 +67,16 @@ public class SpendGroup {
                     currentSpendType = spend.getSpendType();
                 }
                 currentSpends.add(spend);
+                aggregateSpendTotal += spend.getAmount();
             }
         }
         // If there is a current group being collected, close it off and add it in.
         if (currentSpends != null && currentSpendType != null) {
             SpendGroup group = new SpendGroup(currentSpendType, currentSpends);
             groups.add(group);
+            aggregate.add(Spend.create(null, currentSpendType, aggregateSpendTotal, null));
         }
-        return groups;
+        return (heading != null) ? groups.get(0) : new SpendGroup("Summary", aggregate);
     }
 
     /**

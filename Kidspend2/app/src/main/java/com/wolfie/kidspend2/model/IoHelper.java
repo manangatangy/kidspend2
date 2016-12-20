@@ -25,6 +25,7 @@ public class IoHelper {
         // Only use girls spends
         spends = new ArrayList<>();
         for (Spend spend : ioHelper.spends) {
+            spend.trim();
             for (Girl girl : Girl.values()) {
                 if (girl.name().toLowerCase().equals(spend.getGirl().toLowerCase())) {
                     spend.setGirl(girl.name());     // Use correct casing.

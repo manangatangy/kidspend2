@@ -15,6 +15,7 @@ import com.wolfie.kidspend2.model.loader.AsyncListeningTask;
 import com.wolfie.kidspend2.model.loader.IoLoader;
 import com.wolfie.kidspend2.presenter.FilePresenter.FileUi;
 import com.wolfie.kidspend2.view.ActionSheetUi;
+import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import java.io.File;
 
@@ -222,8 +223,8 @@ public class FilePresenter extends BasePresenter<FileUi>
         if (ioResult.mSuccessMessage != null) {
             if (!mIsExporting) {
                 // Refresh list
-//                ListPresenter listPresenter  = getUi().findPresenter(ListFragment.class);
-//                listPresenter.loadEntries();
+                GirlPagerPresenter girlPagerPresenter = getUi().findPresenter(GirlPagerFragment.class);
+                girlPagerPresenter.getCurrentGirlPresenter().loadEntries();
             }
             if (mIsExporting && getUi().isEmailBackup()) {
 //                SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());

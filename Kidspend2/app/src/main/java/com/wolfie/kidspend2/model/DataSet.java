@@ -30,7 +30,7 @@ public class DataSet {
             public int compare(Spend lhs, Spend rhs) {
                 int compare = lhs.getSpendType().compareToIgnoreCase(rhs.getSpendType());
                 if (compare == 0) {
-                    compare = lhs.getSpendType().compareToIgnoreCase(rhs.getSpendType());
+                    compare = lhs.getCreated().compareToIgnoreCase(rhs.getCreated());
                 }
                 return compare;
             }
