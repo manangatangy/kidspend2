@@ -76,6 +76,10 @@ public class Spend {
         return mAmount;
     }
 
+    public String getAmountAsString() {
+        return "" + mAmount;
+    }
+
     public void setAmount(int amount) {
         this.mAmount = amount;
     }

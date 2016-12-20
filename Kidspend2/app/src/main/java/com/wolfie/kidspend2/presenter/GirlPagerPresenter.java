@@ -38,9 +38,14 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
         girlFragment.onShowing();
     }
 
+    public GirlPresenter getCurrentGirlPresenter() {
+        return getUi().getCurrentFragment().getPresenter();
+    }
+
     public interface GirlPagerUi extends BaseUi {
         GirlFragment getGirlFragment(Girl girl);
         Girl getCurrentGirl();
+        GirlFragment getCurrentFragment();
     }
 
 }

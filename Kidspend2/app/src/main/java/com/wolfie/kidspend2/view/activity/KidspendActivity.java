@@ -56,7 +56,15 @@ public class KidspendActivity extends SimpleActivity {
             actionBar.hide();
         }
 
-        mIconAnimator = new IconAnimator(getApplicationContext(), mDrawerContainer, mTwirlingImage);
+        mIconAnimator = new IconAnimator(getApplicationContext(), mDrawerContainer, mTwirlingImage) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // DrawerPresenter needs to reload menu items
+                DrawerFragment drawerFragment = KidspendActivity.this.findFragment(DrawerFragment.class);
+                drawerFragment.onDrawerOpened();
+
+            }
+        };
         mDrawerLayout.setDrawerListener(mIconAnimator);
         mTwirlingImage.setOnClickListener(new OnClickListener() {
             /**

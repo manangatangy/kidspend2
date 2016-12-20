@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
 import com.wolfie.kidspend2.view.BaseUi;
 import com.wolfie.kidspend2.view.fragment.FileFragment;
+import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
+
+import java.util.List;
 
 public class DrawerPresenter extends BasePresenter<DrawerUi> {
 
@@ -51,6 +54,33 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
         return false;
     }
 
+    public void onDrawerOpened() {
+        // Fetch the headings and selected from current GirlPresenter and set to the view
+        GirlPresenter girlPresenter = getCurrentGirlPresenter();
+        if (girlPresenter != null) {
+            List<String> headings = girlPresenter.getHeadings();
+            String selected = girlPresenter.getSpendType();
+            getUi().refreshListWithHeadings(headings);
+            getUi().selectListItem(selected);
+        }
+    }
+
+    public void onItemSelected(String spendType, boolean hasChanged) {
+        getUi().closeDrawer();
+        if (hasChanged) {
+            // Inform GirlPresenter of a new filtered spendType value
+            GirlPresenter girlPresenter = getCurrentGirlPresenter();
+            if (girlPresenter != null) {
+                girlPresenter.setSpendType(spendType);
+            }
+        }
+    }
+
+    private GirlPresenter getCurrentGirlPresenter() {
+        GirlPagerPresenter girlPagerPresenter = getUi().findPresenter(GirlPagerFragment.class);
+        return (girlPagerPresenter == null) ? null : girlPagerPresenter.getCurrentGirlPresenter();
+    }
+
     public void onMenuSettingsClick() {
 //        getUi().closeDrawer();
 //        SettingsPresenter settingsPresenter = getUi().findPresenter(SettingsFragment.class);
@@ -83,6 +113,10 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
     }
 
     public interface DrawerUi extends BaseUi {
+
+        void refreshListWithHeadings(List<String> headings);
+        void selectListItem(@Nullable String selected);
+        void onNavMenuItemClick(String spendType, boolean hasChanged);
         boolean isDrawerOpen();
         void closeDrawer();
         void openDrawer();

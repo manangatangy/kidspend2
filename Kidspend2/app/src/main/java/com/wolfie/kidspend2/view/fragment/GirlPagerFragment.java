@@ -99,8 +99,7 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
                 // GirlFragment, and so no further state need be saved in the GirlPagerPresenter.
                 // This has to be delayed until the GirlFragments are attached to the activity
                 // so that getGirlFragment() can find them.
-                Girl girl = getCurrentGirl();
-                GirlFragment girlFragment = getGirlFragment(girl);
+                GirlFragment girlFragment = getCurrentFragment();
                 girlFragment.onShowing();
             }
         });
@@ -117,4 +116,10 @@ public class GirlPagerFragment extends BaseFragment implements GirlPagerUi {
         return Girl.values()[currentItem];
     }
 
+    @Override
+    public GirlFragment getCurrentFragment() {
+        Girl girl = getCurrentGirl();
+        GirlFragment girlFragment = getGirlFragment(girl);
+        return girlFragment;
+    }
 }

@@ -68,7 +68,7 @@ public class IoLoader {
         }
         @Override
         public IoResult runInBackground(File file) {
-            List<Spend> spends = mDataSource.read();
+            List<Spend> spends = mDataSource.read(null);
             String json = new IoHelper().export(spends);
             IoResult ioResult = null;
             FileOutputStream fos = null;
