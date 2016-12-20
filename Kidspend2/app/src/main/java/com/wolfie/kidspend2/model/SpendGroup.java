@@ -15,9 +15,10 @@ public class SpendGroup {
     private List<Spend> mSpends;
     private int mTotal;
 
-    public SpendGroup(String heading, List<Spend> spends) {
+    public SpendGroup(String heading, List<Spend> spends, int total) {
         mHeading = heading;
         mSpends = spends;
+        mTotal = total;
     }
 
     public String getHeading() {
@@ -30,9 +31,12 @@ public class SpendGroup {
         return mTotal;
     }
 
+    public String getTotalAsString() {
+        return "$" + mTotal;
+    }
     /**
      * Build a single SpendGroup from the DataSet.  If the spendType is non-null, then return
-     * a the one SpendGroup, whose heading matches the specified heading.  If spendType is null
+     *the one SpendGroup, whose heading matches the specified heading.  If spendType is null
      * then make an aggregate list of Spends (with id=-1 so that indicates this Spend cannot be
      * edited).
      * Assumes the Spends in the DataSet are ordered by spendType name.
@@ -42,7 +46,8 @@ public class SpendGroup {
         List<Spend> aggregate = new ArrayList<>();
         String currentSpendType = null;
         int aggregateSpendTotal = 0;
-//        int groupTotal = 0;
+        int currentTotal = 0;
+        int grandTotal = 0;
         List<Spend> currentSpends = null;
         for (Spend spend : dataSet.getSpends()) {
             Log.d("kidspend2", "SpendGroup.buildGroups(): spendType:" + spend.getSpendType() + ", created=" + spend.getCreated());
@@ -50,11 +55,12 @@ public class SpendGroup {
                 // This spend is in a different group to the previous one, close
                 // off the current list (if one has been started).
                 if (currentSpends != null && currentSpendType != null) {
-                    SpendGroup group = new SpendGroup(currentSpendType, currentSpends);
+                    SpendGroup group = new SpendGroup(currentSpendType, currentSpends, currentTotal);
                     groups.add(group);
                     aggregate.add(Spend.create(null, currentSpendType, aggregateSpendTotal, null));
                     currentSpends = null;
                     currentSpendType = null;
+                    currentTotal = 0;
                     aggregateSpendTotal = 0;
                 }
             }
@@ -65,18 +71,21 @@ public class SpendGroup {
                     // group for, so start a new current group for it.
                     currentSpends = new ArrayList<>();
                     currentSpendType = spend.getSpendType();
+                    currentTotal = 0;
                 }
                 currentSpends.add(spend);
+                currentTotal += spend.getAmount();
                 aggregateSpendTotal += spend.getAmount();
+                grandTotal += spend.getAmount();
             }
         }
         // If there is a current group being collected, close it off and add it in.
         if (currentSpends != null && currentSpendType != null) {
-            SpendGroup group = new SpendGroup(currentSpendType, currentSpends);
+            SpendGroup group = new SpendGroup(currentSpendType, currentSpends, currentTotal);
             groups.add(group);
             aggregate.add(Spend.create(null, currentSpendType, aggregateSpendTotal, null));
         }
-        return (heading != null) ? groups.get(0) : new SpendGroup("Summary", aggregate);
+        return (heading != null) ? groups.get(0) : new SpendGroup("Total", aggregate, grandTotal);
     }
 
     /**
@@ -84,19 +93,19 @@ public class SpendGroup {
      * The single SpendGroup contains all the Spends from the DataSet, ordered.
      * As a convenience, a null DataSet parameter means create an empty dataSet in the target.
      */
-    public static List<SpendGroup> buildSingleGroup(String heading, DataSet dataSet) {
-        List<Spend> spends = new ArrayList<>();
-        if (dataSet != null) {
-            for (Spend spend : dataSet.getSpends()) {
-                spends.add(spend);
-            }
-            DataSet.sortOnDate(spends);          // Do the sort, based only on the entry.name
-        }
-        SpendGroup group = new SpendGroup(heading, spends);
-        List<SpendGroup> groups = new ArrayList<>();
-        groups.add(group);
-        return groups;
-    }
+//    public static List<SpendGroup> buildSingleGroup(String heading, DataSet dataSet) {
+//        List<Spend> spends = new ArrayList<>();
+//        if (dataSet != null) {
+//            for (Spend spend : dataSet.getSpends()) {
+//                spends.add(spend);
+//            }
+//            DataSet.sortOnDate(spends);          // Do the sort, based only on the entry.name
+//        }
+//        SpendGroup group = new SpendGroup(heading, spends);
+//        List<SpendGroup> groups = new ArrayList<>();
+//        groups.add(group);
+//        return groups;
+//    }
 
     public static List<String> buildHeadingsList(DataSet dataSet) {
         List<String> headings = new ArrayList<>();

@@ -42,8 +42,11 @@ public class GirlFragment extends BaseFragment
     @BindView(R.id.background_image)
     ImageView mImageView;
 
-    @BindView(R.id.heading_text_view)
-    TextView mHeaderText;
+    @BindView(R.id.text_heading1)
+    TextView mHeader1Text;
+
+    @BindView(R.id.text_heading2)
+    TextView mHeader2Text;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -118,7 +121,8 @@ public class GirlFragment extends BaseFragment
     @Override
     public void showEntries(SpendGroup spendGroup) {
         getAdapter().setGroups(spendGroup.getSpends());
-        mHeaderText.setText(spendGroup.getHeading());
+        mHeader1Text.setText(spendGroup.getHeading());
+        mHeader2Text.setText(spendGroup.getTotalAsString());
     }
 
     private GroupingRecyclerAdapter getAdapter() {
