@@ -125,7 +125,15 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         mSpendType = spendType;
         if (mDataSet != null) {
             SpendGroup spendGroup = SpendGroup.buildGroup(mSpendType, mDataSet);
-            getUi().showEntries(spendGroup);
+            // It is possible that (for a specified spendType) there will be no spends.
+            // This happens if the last spend in a spendType is deleted (and that spendType
+            // was selected from the nav menu).  In this case, reset the selected spendType
+            // to all (ie null).
+            if (mSpendType != null && spendGroup == null) {
+                setSpendType(null);
+            } else {
+                getUi().showEntries(spendGroup);
+            }
         }
     }
 

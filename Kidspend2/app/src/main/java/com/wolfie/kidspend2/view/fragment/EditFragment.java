@@ -152,6 +152,10 @@ public class EditFragment extends ActionSheetFragment implements EditUi {
 
         String type = mEditType.getText().toString().trim();
         spend.setSpendType(type);
+        if (type.length() == 0) {
+            setErrorMessage(R.string.er004);
+            error = true;
+        }
 
         return error ? null : spend;
     }

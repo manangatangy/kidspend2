@@ -7,6 +7,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.wolfie.kidspend2.model.database.MetaData;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -126,6 +129,12 @@ public class Spend implements Parcelable {
         }
         String sortable = fields[2] + mMonths.get(fields[1].toLowerCase()) + fields[0];
         return sortable;
+    }
+
+    public static String getToday() {
+        SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
+        String format = formatter.format(new Date());
+        return format;
     }
 
     static private HashMap<String, String> mMonths;

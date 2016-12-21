@@ -55,5 +55,6 @@
     <string name="er001">Please enter a valid amount</string>
     <string name="er002">Please enter a valid date (\'1 Jan 2017\')</string>
     <string name="er003">Fields have been modified\nclick CANCEL to close without change</string>
+    <string name="er004">Please enter a valid spend type</string>
 
 </resources>

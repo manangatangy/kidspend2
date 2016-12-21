@@ -85,7 +85,17 @@ public class SpendGroup {
             groups.add(group);
             aggregate.add(Spend.create(null, currentSpendType, aggregateSpendTotal, null));
         }
-        return (heading != null) ? groups.get(0) : new SpendGroup("Total", aggregate, grandTotal);
+        if (heading == null) {
+            return new SpendGroup("Total", aggregate, grandTotal);
+        } else {
+            if (groups.size() == 0) {
+                // This can only happen if a heading was specified for which there are no records.
+                return null;
+            } else {
+                return groups.get(0);
+            }
+        }
+//        return (heading != null) ? groups.get(0) : new SpendGroup("Total", aggregate, grandTotal);
     }
 
     /**
