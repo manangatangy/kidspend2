@@ -20,6 +20,10 @@ public class DataSet {
         this.mSpends = spends;
     }
 
+    /**
+     * Sort on SPENDS_TYPE and SPENDS_CREATED
+     * @param spends
+     */
     public static void sort(List<Spend> spends) {
         Collections.sort(spends, new Comparator<Spend>() {
             /**
@@ -30,7 +34,7 @@ public class DataSet {
             public int compare(Spend lhs, Spend rhs) {
                 int compare = lhs.getSpendType().compareToIgnoreCase(rhs.getSpendType());
                 if (compare == 0) {
-                    compare = lhs.getCreated().compareToIgnoreCase(rhs.getCreated());
+                    compare = lhs.getCreatedSortable().compareToIgnoreCase(rhs.getCreatedSortable());
                 }
                 return compare;
             }
@@ -41,7 +45,7 @@ public class DataSet {
         Collections.sort(spends, new Comparator<Spend>() {
             @Override
             public int compare(Spend lhs, Spend rhs) {
-                return lhs.getCreated().compareToIgnoreCase(rhs.getCreated());
+                return lhs.getCreatedSortable().compareToIgnoreCase(rhs.getCreatedSortable());
             }
         });
     }

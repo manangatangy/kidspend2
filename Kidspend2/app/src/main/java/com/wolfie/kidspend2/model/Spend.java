@@ -5,6 +5,8 @@ import android.database.Cursor;
 import com.google.gson.annotations.Expose;
 import com.wolfie.kidspend2.model.database.MetaData;
 
+import java.util.HashMap;
+
 /**
  * The primary data class, held on the database and represented in the ListFragment.
  * Only the mId field is unique.
@@ -97,9 +99,42 @@ public class Spend {
     }
 
     public String getCreated() {
+        // Formatted in the database as "1 DEC 2014"
         return mCreated;
     }
 
+    public String getCreatedSortable() {
+        // Formatted for sorting as "20141201"
+        if (mCreated == null) {
+            return null;
+        }
+        String fields[] = mCreated.split(" ");
+        if (fields.length != 3) {
+            return null;
+        }
+        if (fields[0].length() < 2) {
+            fields[0] = "0" + fields[0];
+        }
+        String sortable = fields[2] + mMonths.get(fields[1].toLowerCase()) + fields[0];
+        return sortable;
+    }
+
+    static private HashMap<String, String> mMonths;
+    static {
+        mMonths = new HashMap<>();
+        mMonths.put("jan", "01");
+        mMonths.put("feb", "02");
+        mMonths.put("mar", "03");
+        mMonths.put("apr", "04");
+        mMonths.put("may", "05");
+        mMonths.put("jun", "06");
+        mMonths.put("jul", "07");
+        mMonths.put("aug", "08");
+        mMonths.put("sep", "09");
+        mMonths.put("oct", "00");
+        mMonths.put("nov", "11");
+        mMonths.put("dec", "12");
+    }
     public void setCreated(String created) {
         mCreated = created;
     }
