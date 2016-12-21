@@ -112,7 +112,7 @@ public abstract class BaseFragment extends Fragment implements BaseUi {
     /**
      * Will return the Presenter corresponding to the specified fragment, or null if
      * the fragment hasn't yet been created.  As an assistance, specifying null for
-     * the fragment class will return the MainPresenter for the EskeyActivity (or
+     * the fragment class will return the MainPresenter for the KidspendActivity (or
      * null if the activity is the wrong type).
      */
     @Nullable
@@ -176,6 +176,10 @@ public abstract class BaseFragment extends Fragment implements BaseUi {
     @Override
     public void showBanner(String message) {
         Snackbar.make(getView(), message, LENGTH_LONG).show();
+    }
+
+    public KidspendActivity getKidspendActivity() {
+        return (KidspendActivity) mBaseActivity;
     }
 
 }

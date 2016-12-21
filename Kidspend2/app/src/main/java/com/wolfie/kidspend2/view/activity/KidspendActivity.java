@@ -4,33 +4,42 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 
 import com.wolfie.kidspend2.R;
+import com.wolfie.kidspend2.model.Girl;
+import com.wolfie.kidspend2.model.ImageCollection.ImageShade;
 import com.wolfie.kidspend2.presenter.MainPresenter;
+import com.wolfie.kidspend2.view.IconAnimator;
+import com.wolfie.kidspend2.view.TwirlingImage;
+import com.wolfie.kidspend2.view.fragment.DrawerFragment;
+import com.wolfie.kidspend2.view.fragment.FileFragment;
+import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import butterknife.BindView;
 
-/**
- * This ref: https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
- * explains how to style the action/tool bar
- * Ref for custom icon: http://stackoverflow.com/a/27116116
- */
+import static com.wolfie.kidspend2.view.IconAnimator.SLIDE_OFFSET_CLOSED;
+import static com.wolfie.kidspend2.view.IconAnimator.SLIDE_OFFSET_OPEN;
+
 public class KidspendActivity extends SimpleActivity {
 
     @BindView(R.id.activity_root_layout)
     View mActivityRootView;
 
     @BindView(R.id.drawer_layout)
-    public DrawerLayout mDrawer;
+    public DrawerLayout mDrawerLayout;
 
-    @BindView(R.id.fragment_drawer)
-    public View mFragmentContainer;
+    @BindView(R.id.drawer_container)
+    public FrameLayout mDrawerContainer;           // Second child of mDrawerLayout holds nav-menu
 
-//    @BindView(R.id.viewPager)
-//    ViewPager mViewPager;
+    @BindView(R.id.twirling_image)
+    public TwirlingImage mTwirlingImage;
 
+    private IconAnimator mIconAnimator;
     private MainPresenter mMainPresenter;
 
     @Override
@@ -42,42 +51,54 @@ public class KidspendActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setupFragment("NavigationDrawerFragment.class", R.id.fragment_drawer, null);
-//        final ActionBarDrawerToggle actionBarDrawerToggle =
-//                new ActionBarDrawerToggle(this, mDrawer, null, 0, 0);
-//                                          R.string.drawer_open, R.string.drawer_close);
-
-//        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
-        /*
-        This correctly sets the icon, and the drawer can be opened by dragging the edge
-        however there is no click listener on the icon, and also the drawer listener
-        doesn't shade the toolbar. Prob because getSupportActionBar ==> null
-         */
-//        drawerButton = (BadgeDrawerButton) findViewById(R.id.badge_drawer_button);
-//        drawerButton.setOnClickListener(
-//                new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View v) {
-//                        mDrawerLayout.openDrawer(Gravity.LEFT);
-//                    }
-//                });
-        // Defer code dependent on restoration of previous instance state.
-//        mDrawer.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                actionBarDrawerToggle.syncState();
-//            }
-//        });
-//        mDrawer.setDrawerListener(new NavDrawerListener(this, actionBarDrawerToggle));
-
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
-//        mMainPresenter = new MainPresenter(null, getApplicationContext());
+        mIconAnimator = new IconAnimator(getApplicationContext(), mDrawerContainer, mTwirlingImage) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // DrawerPresenter needs to reload menu items
+                DrawerFragment drawerFragment = KidspendActivity.this.findFragment(DrawerFragment.class);
+                drawerFragment.onDrawerOpened();
+
+            }
+        };
+        mDrawerLayout.setDrawerListener(mIconAnimator);
+        mTwirlingImage.setOnClickListener(new OnClickListener() {
+            /**
+             * The drawer/icon/animator are coupled together and work as follows:
+             * 1. When the user drags the drawer, the {@link IconAnimator} listens
+             * to onDrawerSlide and animates the icon accordingly.
+             * 2. When the program calls {@link KidspendActivity#openDrawer()} (from resume)
+             * then the {@link DrawerLayout} is opened and the iconAnimator is told to
+             * move the {@link TwirlingImage} to the open state. No animation occurs.
+             * 3. When the Icon is clicked, then the DrawerLayout is animated open
+             * and it also calls back to the IconAnimator (which is also a
+             * {@link android.support.v4.widget.DrawerLayout.DrawerListener}) to
+             * animate the TwirlyIcon etc.
+             */
+            @Override
+            public void onClick(View v) {
+                if (isDrawerOpen()) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                }
+            }
+        });
+
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
+
+        // Create the drawer fragment into it's container.
+        setupFragment(DrawerFragment.class.getName(), R.id.drawer_container, null);
+
+        // Create the file (activity sheet) fragment into it's container.
+        setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
+
+        mMainPresenter = new MainPresenter(null, getApplicationContext());
 
 //        // Set the initial values for some settings.  May be changed later by SettingsPresenter
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -87,27 +108,13 @@ public class KidspendActivity extends SimpleActivity {
 //        setBackgroundImage(enumIndex);
 //
 
-//        mViewPager.setAdapter(new GirlPagerAdapter(getSupportFragmentManager(), this));
-
-//
-        // Create the drawer fragment into it's container.
-//        setupFragment(DrawerFragment.class.getName(), R.id.fragment_container_activity_drawer, null);
-
-//        // Create the entry edit (activity sheet) fragment into it's container.
-//        setupFragment(EditFragment.class.getName(), R.id.fragment_container_edit, null);
-//
-//        // Create the login (activity sheet) fragment into it's container.
-//        setupFragment(LoginFragment.class.getName(), R.id.fragment_container_login, null);
-//
-//        // Create the file (activity sheet) fragment into it's container.
-//        setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
-//
-//        // Create the help (activity sheet) fragment into it's container.
-//        setupFragment(HelpFragment.class.getName(), R.id.fragment_container_help, null);
-//
 //        // Create the settings (activity sheet) fragment into it's container.
 //        setupFragment(SettingsFragment.class.getName(), R.id.fragment_container_settings, null);
 
+    }
+
+    public void updateIcon(Girl girl, @ImageShade int imageShade) {
+        mTwirlingImage.updateIcon(girl, imageShade);
     }
 
     @Override
@@ -121,30 +128,22 @@ public class KidspendActivity extends SimpleActivity {
         return mActivityRootView;
     }
 
-
-//    // loads the main content fragment
-//    public Fragment setupNavigationFragment(Class fragmentClass, int screenTitle) {
-//        int fragmentLayoutResourceId = R.id.fragment_container_main;
-//        String fragmentClassName = fragmentClass.getName();
-//        Fragment fragment = setupFragment(fragmentClassName, fragmentLayoutResourceId, null);
-////        setupTitle(getString(screenTitle));
-//        return fragment;
-//    }
-
     public void openDrawer() {
-        if (mDrawer != null) {
-            mDrawer.openDrawer(mFragmentContainer);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.openDrawer(mDrawerContainer);
+            mIconAnimator.onDrawerSlide(null, SLIDE_OFFSET_OPEN);
         }
     }
 
     public void closeDrawer() {
-        if (mDrawer != null) {
-            mDrawer.closeDrawer(mFragmentContainer);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mDrawerContainer);
+            mIconAnimator.onDrawerSlide(null, SLIDE_OFFSET_CLOSED);
         }
     }
 
     public boolean isDrawerOpen() {
-        return mDrawer != null && mDrawer.isDrawerOpen(mFragmentContainer);
+        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerContainer);
     }
 
     @Override

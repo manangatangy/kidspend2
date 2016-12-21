@@ -2,7 +2,7 @@ package com.wolfie.kidspend2.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,22 @@ import android.view.ViewGroup;
 import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.DrawerPresenter;
 import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
-import com.wolfie.kidspend2.view.activity.KidspendActivity;
+import com.wolfie.kidspend2.util.DefaultLayoutManager;
+import com.wolfie.kidspend2.view.adapter.NavMenuRecyclerAdapter;
+import com.wolfie.kidspend2.view.adapter.NavMenuRecyclerAdapter.MenuItemViewHolder;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DrawerFragment extends BaseFragment implements DrawerUi {
+public class DrawerFragment extends BaseFragment
+        implements DrawerUi, NavMenuRecyclerAdapter.OnNavMenuItemClickListener {
+
+    @BindView(R.id.navigation_recycler_view)
+    RecyclerView mRecyclerView;
 
     private DrawerPresenter mDrawerPresenter;
-    private ActionBarDrawerToggle mToggle;
 
     @Nullable
     @Override
@@ -40,36 +48,71 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mRecyclerView.setLayoutManager(new DefaultLayoutManager(getContext()));
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        getEskeyActivity().setSupportActionBar(getEskeyActivity().mToolbar);
-//
-//        getEskeyActivity().mToolbar.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                int height = getEskeyActivity().mToolbar.getHeight();
-//                // Read your drawable from somewhere
-//                Drawable dr = getResources().getDrawable(R.drawable.claire_00, null);
-//                Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-//                // Scale it to 50 x 50
-//                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, height, height, true));
-//                // Set your new, scaled drawable "d"
-//
-//                getEskeyActivity().mToolbar.setNavigationIcon(d);
-//            }
-//        });
-//        getEskeyActivity().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        // http://www.101apps.co.za/index.php/articles/using-toolbars-in-your-apps.html
+    }
 
-//        mToggle = new ActionBarDrawerToggle(
-//                getEskeyActivity(),
-//                getEskeyActivity().mDrawer,
-//                getEskeyActivity().mToolbar,
-//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        mToggle.syncState();
+    @Override
+    public void refreshListWithHeadings(List<String> headings) {
+        getAdapter().setMenuItems(headings);
+    }
+
+    @Override
+    public void selectListItem(@Nullable String selected) {
+        // selected == null means select the top item (ALL_GROUPS)
+        final int adapterPosition = (selected == null) ? 0 : getAdapter().getAdapterPositionForItem(selected);
+        if (adapterPosition >= 0) {
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    MenuItemViewHolder viewHolder =
+                            (MenuItemViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
+                    viewHolder.setSelected(false);       // Won't cause call to onNavMenuItemClick
+                }
+            });
+        }
+    }
+
+    private NavMenuRecyclerAdapter getAdapter() {
+        NavMenuRecyclerAdapter adapter = (NavMenuRecyclerAdapter)mRecyclerView.getAdapter();
+        if (adapter == null) {
+            adapter = new NavMenuRecyclerAdapter(getContext());
+            adapter.setNavMenuItemClickListener(this);
+            mRecyclerView.setAdapter(adapter);
+        }
+        return adapter;
+    }
+
+    /**
+     * @param spendType - will be null to indicate ALL_GROUPS_NAV_HEADING
+     * @param hasChanged - means not already selected
+     */
+    @Override
+    public void onNavMenuItemClick(String spendType, boolean hasChanged) {
+        mDrawerPresenter.onItemSelected(spendType, hasChanged);
+    }
+
+    public void onDrawerOpened() {
+        mDrawerPresenter.onDrawerOpened();
+    }
+
+    @Override
+    public boolean isDrawerOpen() {
+        return getKidspendActivity().isDrawerOpen();
+    }
+
+    @Override
+    public void closeDrawer() {
+        getKidspendActivity().closeDrawer();
+    }
+
+    @Override
+    public void openDrawer() {
+        getKidspendActivity().openDrawer();
     }
 
     @OnClick(R.id.menu_item_settings)
@@ -84,41 +127,4 @@ public class DrawerFragment extends BaseFragment implements DrawerUi {
     void onMenuImport() {
         mDrawerPresenter.onMenuImportClick();
     }
-    @OnClick(R.id.menu_item_help)
-    void onMenuHelp() {
-        mDrawerPresenter.onMenuHelp();
-    }
-    @OnClick(R.id.menu_item_backup)
-    void onMenuBackup() {
-        mDrawerPresenter.onMenuBackup();
-    }
-    @OnClick(R.id.menu_item_restore)
-    void onMenuRestore() {
-        mDrawerPresenter.onMenuRestore();
-    }
-
-    @Override
-    public boolean isDrawerOpen() {
-//        return getEskeyActivity().mDrawer.isDrawerOpen(Gravity.LEFT);
-        return false;
-    }
-
-    @Override
-    public void closeDrawer() {
-        if (isDrawerOpen()) {
-//            getEskeyActivity().mDrawer.closeDrawer(Gravity.LEFT);
-        }
-    }
-
-    @Override
-    public void openDrawer() {
-        if (!isDrawerOpen()) {
-//            getEskeyActivity().mDrawer.openDrawer(Gravity.LEFT);
-        }
-    }
-
-    private KidspendActivity getEskeyActivity() {
-        return (KidspendActivity) mBaseActivity;
-    }
-
 }
