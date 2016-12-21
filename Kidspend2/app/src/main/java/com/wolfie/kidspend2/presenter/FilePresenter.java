@@ -57,7 +57,6 @@ public class FilePresenter extends BasePresenter<FileUi>
     private void init() {
         int id = mIsExporting ? R.string.st014 : R.string.st015;
         getUi().setTitleText(id);
-        // Only need a password from the user if restoring.
         getUi().setEmailBackupSwitchVisibility(mIsExporting);
         getUi().setFileName("kidspend.txt");
         getUi().setStorageType(StorageType.TYPE_INTERNAL);

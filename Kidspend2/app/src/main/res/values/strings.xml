@@ -15,8 +15,8 @@
     <string name="menu_item_restore">Restore</string>
 
     <string name="st013">External storage is not available</string>
-    <string name="st014">Export to clear text</string>
-    <string name="st015">Import from clear text</string>
+    <string name="st014">Export</string>
+    <string name="st015">Import</string>
     <string name="st016">
         Access to public storage has \npreviously been denied\n
         Go to settings/apps/kidspend2 \n
