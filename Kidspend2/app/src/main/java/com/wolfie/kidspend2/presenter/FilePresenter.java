@@ -55,8 +55,6 @@ public class FilePresenter extends BasePresenter<FileUi>
     }
 
     private void init() {
-        int id = mIsExporting ? R.string.st014 : R.string.st015;
-        getUi().setTitleText(id);
         getUi().setEmailBackupSwitchVisibility(mIsExporting);
         getUi().setFileName("kidspend.txt");
         getUi().setStorageType(StorageType.TYPE_INTERNAL);
@@ -70,7 +68,7 @@ public class FilePresenter extends BasePresenter<FileUi>
             hide();
         } else {
             // The user may have altered media/storage-access while we were paused, must re-check
-            onShow();
+            getUi().show();
         }
     }
 
@@ -117,6 +115,8 @@ public class FilePresenter extends BasePresenter<FileUi>
     }
 
     public void onShow() {
+        int id = mIsExporting ? R.string.st014 : R.string.st015;
+        getUi().setTitleText(id);
         // If media isn't available, then only allow internal storage type.
         // Otherwise, enable OK and all storage types.
 

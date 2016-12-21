@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecyclerAdapter.MenuItemViewHolder> {
 
-    private static final String ALL_GROUPS = "All groups";
+    private static final String ALL_GROUPS = "Summary";
 
     private Context mContext;
     private List<Item> mItemList = new ArrayList<>();

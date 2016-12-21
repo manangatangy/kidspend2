@@ -18,9 +18,10 @@ public class EditPresenter extends BasePresenter<EditUi>
 
     private final static String KEY_EDIT_ACTION_SHEET_SHOWING = "KEY_EDIT_ACTION_SHEET_SHOWING";
     private final static String KEY_EDIT_ACTION_SHEET_ENTRY = "KEY_EDIT_ACTION_SHEET_ENTRY";
+    private final static String KEY_EDIT_SPEND = "KEY_EDIT_SPEND";
 
-    private Spend mSpend;
     private boolean mIsShowing;
+    private Spend mSpend;
 
     public EditPresenter(EditUi editUi) {
         super(editUi);
@@ -29,7 +30,9 @@ public class EditPresenter extends BasePresenter<EditUi>
     @Override
     public void resume() {
         super.resume();
-        if (!mIsShowing) {
+        if (mIsShowing) {
+            getUi().show();
+        } else {
             getUi().hide();
         }
     }
@@ -38,18 +41,18 @@ public class EditPresenter extends BasePresenter<EditUi>
     public void pause() {
         super.pause();
         mIsShowing = getUi().isShowing();
-        getUi().dismissKeyboard(false);
     }
 
     @Override
     public void onSaveState(Bundle outState) {
         outState.putBoolean(KEY_EDIT_ACTION_SHEET_SHOWING, mIsShowing);
-        // TODO save/restore Entry being editted
+        outState.putParcelable(KEY_EDIT_SPEND, mSpend);
     }
 
     @Override
     public void onRestoreState(@Nullable Bundle savedState) {
         mIsShowing = savedState.getBoolean(KEY_EDIT_ACTION_SHEET_SHOWING, false);
+        mSpend = savedState.getParcelable(KEY_EDIT_SPEND);
     }
 
     /**
@@ -57,7 +60,7 @@ public class EditPresenter extends BasePresenter<EditUi>
      * A null spend is allowed, it means create a new spend with all empty fields for editing.
      */
     public void editSpend(@Nullable Spend spend, Girl girl) {
-        mSpend = (spend != null) ? spend : Spend.create(girl.name(), "", 0, "today");
+        mSpend = (spend != null) ? spend : Spend.create(girl.name(), "", 0, "TODAY");
         getUi().show();
     }
 
@@ -68,7 +71,7 @@ public class EditPresenter extends BasePresenter<EditUi>
     public void editNewEntry(@Nullable String spendType, Girl girl) {
         editSpend(spendType == null
                   ? null
-                  : Spend.create(girl.name(), spendType, 0, "today"), girl);
+                  : Spend.create(girl.name(), spendType, 0, "TODAY"), girl);
     }
 
     /**
@@ -107,9 +110,6 @@ public class EditPresenter extends BasePresenter<EditUi>
 
     public void onClickCancel() {
         getUi().dismissKeyboard(true);
-        if (!showErrorIfModified()) {
-            getUi().hide();
-        }
     }
 
     @Override

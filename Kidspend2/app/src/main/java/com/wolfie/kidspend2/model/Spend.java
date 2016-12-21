@@ -1,6 +1,8 @@
 package com.wolfie.kidspend2.model;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.wolfie.kidspend2.model.database.MetaData;
@@ -11,7 +13,7 @@ import java.util.HashMap;
  * The primary data class, held on the database and represented in the ListFragment.
  * Only the mId field is unique.
  */
-public class Spend {
+public class Spend implements Parcelable {
 
     private int mId = -1;
     @Expose
@@ -144,5 +146,38 @@ public class Spend {
     }
     public void setCreated(String created) {
         mCreated = created;
+    }
+
+    public static final Creator<Spend> CREATOR = new Creator<Spend>() {
+        @Override
+        public Spend createFromParcel(Parcel in) {
+            return new Spend(in);
+        }
+        @Override
+        public Spend[] newArray(int size) {
+            return new Spend[size];
+        }
+    };
+
+    protected Spend(Parcel in) {
+        mId = in.readInt();
+        mGirl = in.readString();
+        mSpendType = in.readString();
+        mAmount = in.readInt();
+        mCreated = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeInt(mId);
+        dest.writeString(mGirl);
+        dest.writeString(mSpendType);
+        dest.writeInt(mAmount);
+        dest.writeString(mCreated);
     }
 }

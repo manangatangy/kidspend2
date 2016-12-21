@@ -40,6 +40,9 @@ public class KidspendActivity extends SimpleActivity {
     @BindView(R.id.twirling_image)
     public TwirlingImage mTwirlingImage;
 
+    @BindView(R.id.view_home)
+    public View mHome;
+
     private IconAnimator mIconAnimator;
     private MainPresenter mMainPresenter;
 
@@ -67,7 +70,8 @@ public class KidspendActivity extends SimpleActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mIconAnimator);
-        mTwirlingImage.setOnClickListener(new OnClickListener() {
+        // The clickable view area is different for open and close functions.
+        mHome.setOnClickListener(new OnClickListener() {
             /**
              * The drawer/icon/animator are coupled together and work as follows:
              * 1. When the user drags the drawer, the {@link IconAnimator} listens
@@ -82,10 +86,16 @@ public class KidspendActivity extends SimpleActivity {
              */
             @Override
             public void onClick(View v) {
+                if (!isDrawerOpen()) {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                }
+            }
+        });
+        mDrawerContainer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 if (isDrawerOpen()) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-                } else {
-                    mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
             }
         });

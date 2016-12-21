@@ -22,17 +22,13 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
     @Override
     public void resume() {
         super.resume();
-        if (!mIsOpen) {
-            getUi().closeDrawer();
-        } else {
-            getUi().openDrawer();
-        }
     }
 
     @Override
     public void pause() {
         super.pause();
         mIsOpen = getUi().isDrawerOpen();
+        getUi().closeDrawer();
     }
 
     @Override
