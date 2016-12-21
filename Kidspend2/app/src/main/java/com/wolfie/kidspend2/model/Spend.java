@@ -105,11 +105,18 @@ public class Spend {
 
     public String getCreatedSortable() {
         // Formatted for sorting as "20141201"
-        if (mCreated == null) {
+        return parseDateString(mCreated);
+    }
+
+    public static String parseDateString(String dateString) {
+        if (dateString == null) {
             return null;
         }
-        String fields[] = mCreated.split(" ");
+        String fields[] = dateString.split(" ");
         if (fields.length != 3) {
+            return null;
+        }
+        if (mMonths.get(fields[1].toLowerCase()) == null) {
             return null;
         }
         if (fields[0].length() < 2) {

@@ -13,6 +13,7 @@ import com.wolfie.kidspend2.model.SpendGroup;
 import com.wolfie.kidspend2.model.loader.AsyncListeningTask;
 import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
 import com.wolfie.kidspend2.view.BaseUi;
+import com.wolfie.kidspend2.view.fragment.EditFragment;
 
 import java.util.List;
 
@@ -129,15 +130,15 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     }
 
     public void onListItemClick(Spend selectedSpend) {
-//        EditPresenter editPresenter = getUi().findPresenter(EditFragment.class);
-//        if (editPresenter != null) {
-//            if (selectedEntry != null) {
-//                editPresenter.editEntry(selectedEntry);
-//            } else {
-//                // Set up a new Entry for the currently selected groupname.
-//                editPresenter.editNewEntry(mSpendType);
-//            }
-//        }
+        EditPresenter editPresenter = getUi().findPresenter(EditFragment.class);
+        if (editPresenter != null) {
+            if (selectedSpend != null) {
+                editPresenter.editSpend(selectedSpend, getUi().getGirl());
+            } else {
+                // Set up a new Entry for the currently selected spendType.
+                editPresenter.editNewEntry(mSpendType, getUi().getGirl());
+            }
+        }
     }
 
     @Nullable
@@ -150,6 +151,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     }
 
     public void onClickAdd() {
+        onListItemClick(null);
     }
 
     public interface GirlUi extends BaseUi {

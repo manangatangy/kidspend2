@@ -58,5 +58,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+    <!-- Content file view (populated by action sheet edit fragment)-->
+    <FrameLayout
+        android:id="@+id/fragment_container_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>

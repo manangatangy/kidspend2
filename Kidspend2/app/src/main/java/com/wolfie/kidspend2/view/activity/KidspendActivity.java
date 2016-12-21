@@ -17,6 +17,7 @@ import com.wolfie.kidspend2.presenter.MainPresenter;
 import com.wolfie.kidspend2.view.IconAnimator;
 import com.wolfie.kidspend2.view.TwirlingImage;
 import com.wolfie.kidspend2.view.fragment.DrawerFragment;
+import com.wolfie.kidspend2.view.fragment.EditFragment;
 import com.wolfie.kidspend2.view.fragment.FileFragment;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
@@ -97,6 +98,9 @@ public class KidspendActivity extends SimpleActivity {
 
         // Create the file (activity sheet) fragment into it's container.
         setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
+
+        // Create the edit (activity sheet) fragment into it's container.
+        setupFragment(EditFragment.class.getName(), R.id.fragment_container_edit, null);
 
         mMainPresenter = new MainPresenter(null, getApplicationContext());
 
