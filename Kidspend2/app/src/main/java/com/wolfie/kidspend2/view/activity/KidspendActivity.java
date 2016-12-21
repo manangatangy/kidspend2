@@ -86,7 +86,9 @@ public class KidspendActivity extends SimpleActivity {
              */
             @Override
             public void onClick(View v) {
-                if (!isDrawerOpen()) {
+                if (isDrawerOpen()) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
                     mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
             }

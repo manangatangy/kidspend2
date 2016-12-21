@@ -68,6 +68,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         }
         getUi().setPageImage(girl.getImageResourceId(mImageIndex));
         getUi().updateIcon(girl, girl.getImageShade(mImageIndex));
+        getUi().hidePullToRefreshSpinner();
     }
 
     @Override
@@ -163,6 +164,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     }
 
     public interface GirlUi extends BaseUi {
+        void hidePullToRefreshSpinner();
         Girl getGirl();
         void setPageImage(@DrawableRes int resourceId);
         void updateIcon(Girl girl, @ImageShade int imageShade);

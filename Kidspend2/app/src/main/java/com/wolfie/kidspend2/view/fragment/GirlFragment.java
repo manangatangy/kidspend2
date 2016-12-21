@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -35,7 +36,8 @@ import butterknife.OnClick;
  * by the {@link GirlPagerPresenter}
  */
 public class GirlFragment extends BaseFragment
-        implements GirlUi, GroupingRecyclerAdapter.OnItemInListClickedListener {
+        implements GirlUi, GroupingRecyclerAdapter.OnItemInListClickedListener,
+                   SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY_GIRL_NAME = "KEY_GIRL_NAME";
 
@@ -47,6 +49,9 @@ public class GirlFragment extends BaseFragment
 
     @BindView(R.id.text_heading2)
     TextView mHeader2Text;
+
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -76,9 +81,8 @@ public class GirlFragment extends BaseFragment
         View view = inflater.inflate(R.layout.fragment_girl, container, false);
         unbinder = ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new DefaultLayoutManager(getContext()));
-
-//        mRecyclerView.setAdapter(adapter);
-
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
         return view;
     }
 
@@ -86,6 +90,16 @@ public class GirlFragment extends BaseFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLayoutManager(new DefaultLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onRefresh() {
+        mGirlPresenter.bumpImage();
+    }
+
+    @Override
+    public void hidePullToRefreshSpinner() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void onShowing() {
