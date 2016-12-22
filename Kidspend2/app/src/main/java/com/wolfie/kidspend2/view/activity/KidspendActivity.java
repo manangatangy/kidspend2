@@ -102,9 +102,6 @@ public class KidspendActivity extends SimpleActivity {
             }
         });
 
-        // Create the main content fragment into it's container.
-        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
-
         // Create the drawer fragment into it's container.
         setupFragment(DrawerFragment.class.getName(), R.id.drawer_container, null);
 
@@ -112,7 +109,12 @@ public class KidspendActivity extends SimpleActivity {
         setupFragment(FileFragment.class.getName(), R.id.fragment_container_file, null);
 
         // Create the edit (activity sheet) fragment into it's container.
+        // This is setup before GirlPagerFragment so that it's processed first
+        // in the list for BaseActivity.onBackPressed()
         setupFragment(EditFragment.class.getName(), R.id.fragment_container_edit, null);
+
+        // Create the main content fragment into it's container.
+        setupFragment(GirlPagerFragment.class.getName(), R.id.content_container, null);
 
         mMainPresenter = new MainPresenter(null, getApplicationContext());
 
