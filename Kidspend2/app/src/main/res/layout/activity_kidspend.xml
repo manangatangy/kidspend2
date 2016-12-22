@@ -52,6 +52,12 @@
             />
     </com.wolfie.kidspend2.view.TwirlingImage>
 
+    <View
+        android:id="@+id/view_home"
+        android:layout_width="@dimen/icon_height_closed"
+        android:layout_height="@dimen/icon_height_closed"
+        />
+
     <!-- Content file view (populated by action sheet file fragment)-->
     <FrameLayout
         android:id="@+id/fragment_container_file"
@@ -65,10 +71,5 @@
         android:layout_height="match_parent"
         />
 
-    <View
-        android:id="@+id/view_home"
-        android:layout_width="@dimen/icon_height_closed"
-        android:layout_height="@dimen/icon_height_closed"
-        />
 
 </RelativeLayout>

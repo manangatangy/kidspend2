@@ -71,7 +71,9 @@ public class DrawerFragment extends BaseFragment
                 public void run() {
                     MenuItemViewHolder viewHolder =
                             (MenuItemViewHolder)mRecyclerView.findViewHolderForAdapterPosition(adapterPosition);
-                    viewHolder.setSelected(false);       // Won't cause call to onNavMenuItemClick
+                    if (viewHolder != null) {
+                        viewHolder.setSelected(false);       // Won't cause call to onNavMenuItemClick
+                    }
                 }
             });
         }
