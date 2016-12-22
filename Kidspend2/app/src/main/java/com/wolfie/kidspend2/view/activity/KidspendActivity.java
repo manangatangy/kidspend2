@@ -20,6 +20,7 @@ import com.wolfie.kidspend2.view.fragment.DrawerFragment;
 import com.wolfie.kidspend2.view.fragment.EditFragment;
 import com.wolfie.kidspend2.view.fragment.FileFragment;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
+import com.wolfie.kidspend2.view.fragment.SettingsFragment;
 
 import butterknife.BindView;
 
@@ -118,6 +119,9 @@ public class KidspendActivity extends SimpleActivity {
 
         mMainPresenter = new MainPresenter(null, getApplicationContext());
 
+        // Create the settings (activity sheet) fragment into it's container.
+        setupFragment(SettingsFragment.class.getName(), R.id.fragment_container_settings, null);
+
 //        // Set the initial values for some settings.  May be changed later by SettingsPresenter
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //        int sessionTimeout = prefs.getInt(SettingsPresenter.PREF_SESSION_TIMEOUT, TimeoutMonitor.DEFAULT_TIMEOUT);
@@ -125,9 +129,6 @@ public class KidspendActivity extends SimpleActivity {
 //        int enumIndex = prefs.getInt(SettingsPresenter.PREF_SESSION_BACKGROUND_IMAGE, SimpleActivity.DEFAULT_BACKGROUND_IMAGE);
 //        setBackgroundImage(enumIndex);
 //
-
-//        // Create the settings (activity sheet) fragment into it's container.
-//        setupFragment(SettingsFragment.class.getName(), R.id.fragment_container_settings, null);
 
     }
 

@@ -2,9 +2,11 @@ package com.wolfie.kidspend2.presenter;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +23,7 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.wolfie.kidspend2.presenter.SettingsPresenter.PREF_SESSION_BACKUP_EMAIL_ADDRESS;
 
 public class FilePresenter extends BasePresenter<FileUi>
         implements AsyncListeningTask.Listener<IoLoader.IoResult> {
@@ -226,10 +229,10 @@ public class FilePresenter extends BasePresenter<FileUi>
                 girlPagerPresenter.getCurrentGirlPresenter().loadEntries();
             }
             if (mIsExporting && getUi().isEmailBackup()) {
-//                SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-//                String emailAddress =  mPrefs.getString(PREF_SESSION_BACKUP_EMAIL_ADDRESS, "");
-//                File ioFile = getFile();
-//                getUi().navigateToEmail(emailAddress, "Kidspend backup file", ioFile);
+                SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String emailAddress =  mPrefs.getString(PREF_SESSION_BACKUP_EMAIL_ADDRESS, "");
+                File ioFile = getFile();
+                getUi().navigateToEmail(emailAddress, "Kidspend backup file", ioFile);
             } else {
                 getUi().showBanner(ioResult.mSuccessMessage);       // Result of file i/o
             }

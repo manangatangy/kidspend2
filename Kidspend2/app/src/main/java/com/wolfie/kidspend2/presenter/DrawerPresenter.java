@@ -7,6 +7,7 @@ import com.wolfie.kidspend2.presenter.DrawerPresenter.DrawerUi;
 import com.wolfie.kidspend2.view.BaseUi;
 import com.wolfie.kidspend2.view.fragment.FileFragment;
 import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
+import com.wolfie.kidspend2.view.fragment.SettingsFragment;
 
 import java.util.List;
 
@@ -78,9 +79,9 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
     }
 
     public void onMenuSettingsClick() {
-//        getUi().closeDrawer();
-//        SettingsPresenter settingsPresenter = getUi().findPresenter(SettingsFragment.class);
-//        settingsPresenter.show();
+        getUi().closeDrawer();
+        SettingsPresenter settingsPresenter = getUi().findPresenter(SettingsFragment.class);
+        settingsPresenter.show();
     }
     public void onMenuExportClick() {
         getUi().closeDrawer();
