@@ -36,7 +36,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * If {@link Spend#isNew()} returns true then the spend cannot be clicked on for edit.
+     * If {@link Spend#isNew()} returns true then the spend cannot be edited.
+     * Instead the item represents a subtotal for that spend type.
      * In that case, the description is formatted from the spendType.
      */
     public void bind(Spend spend) {
@@ -47,15 +48,15 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
             mDescTextView.setText("- " + spend.getSpendType());
         } else {
             mDescTextView.setText("- " + spend.getCreated());
-            mLayoutView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onListItemClick(mSpend);
-                    }
-                }
-            });
         }
+        mLayoutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onListItemClick(mSpend);
+                }
+            }
+        });
     }
 
 }

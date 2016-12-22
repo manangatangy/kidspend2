@@ -2,6 +2,7 @@ package com.wolfie.kidspend2.presenter;
 
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ import com.wolfie.kidspend2.model.SpendGroup;
 import com.wolfie.kidspend2.model.loader.AsyncListeningTask;
 import com.wolfie.kidspend2.presenter.GirlPresenter.GirlUi;
 import com.wolfie.kidspend2.view.BaseUi;
+import com.wolfie.kidspend2.view.fragment.DrawerFragment;
 import com.wolfie.kidspend2.view.fragment.EditFragment;
 
 import java.util.List;
@@ -92,7 +94,13 @@ public class GirlPresenter extends BasePresenter<GirlUi>
 
     @Override
     public boolean backPressed() {
-        return true;        // Means: not consumed here.
+        if (mSpendType == null) {
+            return true;        // Means: not consumed here.
+        } else {
+            // Currently viewing spends for a specified spendType, go back to summary list
+            selectNavMenuSpendType(null);
+            return false;       // Handled here.
+        }
     }
 
     public void loadEntries() {
@@ -138,11 +146,26 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         }
     }
 
-    public void onListItemClick(Spend selectedSpend) {
+    public void onListItemClick(@NonNull Spend selectedSpend) {
+        if (!selectedSpend.isNew()) {
+            editSpend(selectedSpend);
+        } else {
+            // This spend represents a sub-total; it's not an actual db spend record.
+            selectNavMenuSpendType(selectedSpend.getSpendType());
+        }
+    }
+
+    private void selectNavMenuSpendType(String spendType) {
+        DrawerPresenter drawerPresenter = getUi().findPresenter(DrawerFragment.class);
+        // This call will cause callback to setSpendType()
+        drawerPresenter.onItemSelected(spendType, true);
+    }
+
+    private void editSpend(Spend spend) {
         EditPresenter editPresenter = getUi().findPresenter(EditFragment.class);
         if (editPresenter != null) {
-            if (selectedSpend != null) {
-                editPresenter.editSpend(selectedSpend, getUi().getGirl());
+            if (spend != null) {
+                editPresenter.editSpend(spend, getUi().getGirl());
             } else {
                 // Set up a new Entry for the currently selected spendType.
                 editPresenter.editNewEntry(mSpendType, getUi().getGirl());
@@ -160,7 +183,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     }
 
     public void onClickAdd() {
-        onListItemClick(null);
+        editSpend(null);
     }
 
     public interface GirlUi extends BaseUi {

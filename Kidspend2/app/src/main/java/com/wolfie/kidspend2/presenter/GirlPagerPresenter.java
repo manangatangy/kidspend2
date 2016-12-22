@@ -32,6 +32,11 @@ public class GirlPagerPresenter extends BasePresenter<GirlPagerUi> {
     public void onRestoreState(@Nullable Bundle savedState) {
     }
 
+    @Override
+    public boolean backPressed() {
+        return getCurrentGirlPresenter().backPressed();
+    }
+
     public void onGirlChanged(Girl newGirl) {
         // This GirlFragment is being paged into view.
         GirlFragment girlFragment = getUi().getGirlFragment(newGirl);
