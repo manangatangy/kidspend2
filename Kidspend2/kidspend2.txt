@@ -858,6 +858,25 @@
       "mGirl": "RACHEL",
       "mSpendType": "Gift"
     },
+
+    { "mAmount": 100, "mCreated": "27 AUG 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+    { "mAmount": 25, "mCreated": "11 SEP 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+    { "mAmount": 90, "mCreated": "11 SEP 2016", "mGirl": "RACHEL", "mSpendType": "Phone"  },
+
+    { "mAmount": 20, "mCreated": "12 SEP 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+    { "mAmount": 2000, "mCreated": "20 SEP 2016", "mGirl": "CLAIRE", "mSpendType": "Gift"  },
+    { "mAmount": 840, "mCreated": "29 SEP 2016", "mGirl": "CLAIRE", "mSpendType": "Gift"  },
+    { "mAmount": 45, "mCreated": "11 OCT 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+    { "mAmount": 70, "mCreated": "11 OCT 2016", "mGirl": "RACHEL", "mSpendType": "Phone"  },
+    { "mAmount": 75, "mCreated": "10 NOV 2016", "mGirl": "RACHEL", "mSpendType": "Phone"  },
+    { "mAmount": 800, "mCreated": "23 NOV 2016", "mGirl": "RACHEL", "mSpendType": "Car"  },
+    { "mAmount": 234, "mCreated": "25 NOV 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+
+    { "mAmount": 343, "mCreated": "27 NOV 2016", "mGirl": "NINA", "mSpendType": "Gift"  },
+    { "mAmount": 83, "mCreated": "19 DEC 2016", "mGirl": "RACHEL", "mSpendType": "Phone"  },
+    { "mAmount": 88, "mCreated": "19 DEC 2016", "mGirl": "RACHEL", "mSpendType": "Gift"  },
+    { "mAmount": 88, "mCreated": "19 DEC 2016", "mGirl": "CLAIRE", "mSpendType": "Gift"  },
+
     {
       "mAmount": 100,
       "mCreated": "30 JUL 2016",

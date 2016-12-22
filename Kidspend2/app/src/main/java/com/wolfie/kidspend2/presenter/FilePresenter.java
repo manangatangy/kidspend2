@@ -21,8 +21,6 @@ import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import java.io.File;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static com.wolfie.kidspend2.presenter.SettingsPresenter.PREF_SESSION_BACKUP_EMAIL_ADDRESS;
 
 public class FilePresenter extends BasePresenter<FileUi>
@@ -241,11 +239,14 @@ public class FilePresenter extends BasePresenter<FileUi>
     }
 
     public void onEmailActivityResult(int resultCode, Intent intent) {
-        if (resultCode == RESULT_CANCELED) {
-            getUi().showBanner(getContext().getString(R.string.st032));
-        } else if (resultCode == RESULT_OK) {
-            getUi().showBanner(getContext().getString(R.string.st031));
-        }
+        // Can't tell what the email result actually is hmmm.
+        getUi().dismissKeyboard(true);
+
+//        if (resultCode == RESULT_CANCELED) {
+//            getUi().showBanner(getContext().getString(R.string.st032));
+//        } else if (resultCode == RESULT_OK) {
+//            getUi().showBanner(getContext().getString(R.string.st031));
+//        }
     }
 
     public void onClickCancel() {
@@ -287,7 +288,6 @@ public class FilePresenter extends BasePresenter<FileUi>
         void setInternalButtonLabel(String text);
         void setPublicButtonLabel(String text);
 
-        //        void setStorageTypeEnabled(boolean enabled);
         String getFileName();
         boolean isEmailBackup();
         void setEmailBackupSwitchVisibility(boolean isVisible);
@@ -300,7 +300,5 @@ public class FilePresenter extends BasePresenter<FileUi>
         void requestStoragePermission();
         void navigateToEmail(String emailAddress, String subject, File backupFile);
     }
-
-
 
 }
