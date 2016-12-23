@@ -59,9 +59,70 @@
                     android:hint="Backup Email Address"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
-
         </LinearLayout>
     </com.wolfie.kidspend2.view.component.settings.ItemEmailAddress>
+
+    <com.wolfie.kidspend2.view.component.settings.ItemAutoEmailTargets
+        android:id="@+id/setting_item_auto_email_targets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_auto_email_targets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/edit_text_auto_email_targets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="Auto Email Addresses (space separated)"
+                    android:maxLines="10" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </com.wolfie.kidspend2.view.component.settings.ItemAutoEmailTargets>
+
+    <com.wolfie.kidspend2.view.component.settings.ItemAutoEmailThreshold
+        android:id="@+id/setting_item_auto_email_threshold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_auto_email_threshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/edit_text_auto_email_threshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Auto Email Amount Threshold"
+                    android:maxLines="10" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </com.wolfie.kidspend2.view.component.settings.ItemAutoEmailThreshold>
 
     <LinearLayout
         android:paddingTop="20dp"

@@ -11,9 +11,9 @@ import com.wolfie.kidspend2.view.ActionSheetUi;
 public class SettingsPresenter extends BasePresenter<SettingsUi> {
 
     private final static String KEY_SETTINGS_ACTION_SHEET_SHOWING = "KEY_SETTINGS_ACTION_SHEET_SHOWING";
-//    public final static String PREF_SESSION_TIMEOUT = "PREF_SESSION_TIMEOUT";
-//    public final static String PREF_SESSION_BACKGROUND_IMAGE = "PREF_SESSION_BACKGROUND_IMAGE";
-    public final static String PREF_SESSION_BACKUP_EMAIL_ADDRESS = "PREF_SESSION_BACKUP_EMAIL_ADDRESS";
+    public final static String PREF_SETTINGS_BACKUP_EMAIL_ADDRESS = "PREF_SETTINGS_BACKUP_EMAIL_ADDRESS";
+    public final static String PREF_SETTINGS_AUTO_EMAIL_TARGETS = "PREF_SETTINGS_AUTO_EMAIL_TARGETS";
+    public final static String PREF_SETTINGS_AUTO_EMAIL_THRESHOLD = "PREF_SETTINGS_AUTO_EMAIL_THRESHOLD";
 
     private boolean mIsShowing;
 
@@ -51,16 +51,18 @@ public class SettingsPresenter extends BasePresenter<SettingsUi> {
         mIsShowing = savedState.getBoolean(KEY_SETTINGS_ACTION_SHEET_SHOWING, false);
     }
 
+    public static final String targetEmails =
+            "david.x.weiss@gmail.com claireweiss1988@gmail.com nina.e.weiss@hotmail.com rachel.weiss26@hotmail.com"
+    ;
+
     public void show() {
         // Load the current settings into the view elements.
-//        int sessionTimeout = mPrefs.getInt(PREF_SESSION_TIMEOUT, TimeoutMonitor.DEFAULT_TIMEOUT);
-//        getUi().setTimeout(sessionTimeout);
-
-//        int enumIndex = mPrefs.getInt(PREF_SESSION_BACKGROUND_IMAGE, SimpleActivity.DEFAULT_BACKGROUND_IMAGE);
-//        getUi().setImageItem(enumIndex);
-
-        String emailAddress =  mPrefs.getString(PREF_SESSION_BACKUP_EMAIL_ADDRESS, "");
+        String emailAddress =  mPrefs.getString(PREF_SETTINGS_BACKUP_EMAIL_ADDRESS, "");
         getUi().setEmailAddress(emailAddress);
+        String autoTargets =  mPrefs.getString(PREF_SETTINGS_AUTO_EMAIL_TARGETS, targetEmails);
+        getUi().setAutoTargets(autoTargets);
+        String autoThreshold =  mPrefs.getString(PREF_SETTINGS_AUTO_EMAIL_THRESHOLD, "0");
+        getUi().setAutoThreshold(autoThreshold);
 
         getUi().show();
     }
@@ -79,60 +81,31 @@ public class SettingsPresenter extends BasePresenter<SettingsUi> {
         return false;
     }
 
-//    public void onImageSelected(int enumIndex) {
-//        // Change the actual background image
-//        getUi().setActivityBackgroundImage(enumIndex);
-//
-//        // Save in prefs
-//        SharedPreferences.Editor editor = mPrefs.edit();
-//        editor.putInt(PREF_SESSION_BACKGROUND_IMAGE, enumIndex);
-//        editor.apply();
-//    }
-//
-//    public void onTimeoutChanged(int timeoutInMillis) {
-//        // Change the timing source
-//        MainPresenter mainPresenter = getUi().findPresenter(null);
-//        mainPresenter.setTimeout(timeoutInMillis, true);        // Also restart timer
-//
-//        // Save in prefs
-//        SharedPreferences.Editor editor = mPrefs.edit();
-//        editor.putInt(PREF_SESSION_TIMEOUT, timeoutInMillis);
-//        editor.apply();
-//    }
-//
-//    public void onChangePassword(String password, String confirm) {
-//        if (password == null || !password.equals(confirm)) {
-//            getUi().setPasswordError(R.string.st007);
-//        } else if (password.trim().length() != password.length()) {
-//            getUi().setPasswordError(R.string.st011);
-//        } else {
-//            getUi().dismissKeyboard(false);
-//
-//            MainPresenter mainPresenter = getUi().findPresenter(null);
-//            LoginPresenter loginPresenter = getUi().findPresenter(LoginFragment.class);
-//            RemasterLoader remasterLoader = mainPresenter.makeRemasterLoader(loginPresenter.getMediumCrypter());
-//            remasterLoader.remaster(password, this);
-//        }
-//    }
-
     public void onHideEmailSetting(String emailAddress) {
         // Save in prefs
         SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putString(PREF_SESSION_BACKUP_EMAIL_ADDRESS, emailAddress);
+        editor.putString(PREF_SETTINGS_BACKUP_EMAIL_ADDRESS, emailAddress);
+        editor.apply();
+    }
+
+    public void onHideAutoEmailTargetsSetting(String emailTargets) {
+        // Save in prefs
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString(PREF_SETTINGS_AUTO_EMAIL_TARGETS, emailTargets);
+        editor.apply();
+    }
+
+    public void onHideAutoEmailThresholdSetting(String amountThreshold) {
+        // Save in prefs
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString(PREF_SETTINGS_AUTO_EMAIL_THRESHOLD, amountThreshold);
         editor.apply();
     }
 
     public interface SettingsUi extends ActionSheetUi {
-
-//        void setTimeout(int timeoutInMillis);
         void setEmailAddress(String emailAddress);
-
-//        // Must clear the field so that hide isn't inhibited.
-//        void clearPasswordsAndHidePasswordsSetting();
-//        void setPasswordError(@StringRes int resId);
-//        void setImageItem(int enumIndex);
-//        // This method actually changes the image via the EskeyActivity
-//        void setActivityBackgroundImage(int enumIndex);
+        void setAutoTargets(String autoTargets);
+        void setAutoThreshold(String autoThreshold);
     }
 
 }
