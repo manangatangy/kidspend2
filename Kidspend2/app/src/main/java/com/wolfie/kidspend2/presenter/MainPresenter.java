@@ -16,6 +16,7 @@ public class MainPresenter extends BasePresenter<BaseUi> {
     private Source mSource;
     private IoLoader mIoLoader;
     private SpendLoader mSpendLoader;
+    private boolean mListsVisible = true;
 
     public MainPresenter(BaseUi baseUi, Context context) {
         super(baseUi);
@@ -33,6 +34,14 @@ public class MainPresenter extends BasePresenter<BaseUi> {
 
     public SpendLoader getSpendLoader() {
         return mSpendLoader;
+    }
+
+    public void toggleListsVisibility() {
+        mListsVisible = !mListsVisible;
+    }
+
+    public boolean areListsVisible() {
+        return mListsVisible;
     }
 
 }

@@ -953,6 +953,132 @@
       "mCreated": "30 JUL 2016",
       "mGirl": "RACHEL",
       "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 2000,
+      "mCreated": "27 DEC 2016",
+      "mGirl": "CLAIRE",
+      "mSpendType": "Debt"
+    },
+    {
+      "mAmount": 200,
+      "mCreated": "9 JAN 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 88,
+      "mCreated": "11 JAN 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 1500,
+      "mCreated": "15 FEB 2017",
+      "mGirl": "CLAIRE",
+      "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 75,
+      "mCreated": "16 FEB 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 1178,
+      "mCreated": "17 FEB 2017",
+      "mGirl": "NINA",
+      "mSpendType": "Car"
+    },
+    {
+      "mAmount": 10,
+      "mCreated": "1 MAR 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Money"
+    },
+    {
+      "mAmount": 80,
+      "mCreated": "20 MAR 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 100,
+      "mCreated": "26 MAR 2017",
+      "mGirl": "CLAIRE",
+      "mSpendType": "Tigrettes"
+    },
+    {
+      "mAmount": 285,
+      "mCreated": "2 APR 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Cosmetics"
+    },
+    {
+      "mAmount": 1391,
+      "mCreated": "18 APR 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 80,
+      "mCreated": "19 APR 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 100,
+      "mCreated": "6 MAY 2017",
+      "mGirl": "CLAIRE",
+      "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 100,
+      "mCreated": "6 MAY 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Gift"
+    },
+    {
+      "mAmount": 75,
+      "mCreated": "23 MAY 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 670,
+      "mCreated": "21 FEB 2017",
+      "mGirl": "NINA",
+      "mSpendType": "RussiaTrip"
+    },
+    {
+      "mAmount": 1384,
+      "mCreated": "10 FEB 2017",
+      "mGirl": "NINA",
+      "mSpendType": "RussiaTrip"
+    },
+    {
+      "mAmount": 75,
+      "mCreated": "18 JUN 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
+    },
+    {
+      "mAmount": 9000,
+      "mCreated": "18 JUN 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Car-loan-offset-by-acc-balance"
+    },
+    {
+      "mAmount": 9886,
+      "mCreated": "18 JUN 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Car"
+    },
+    {
+      "mAmount": 80,
+      "mCreated": "13 JUL 2017",
+      "mGirl": "RACHEL",
+      "mSpendType": "Phone"
     }
   ]
 }

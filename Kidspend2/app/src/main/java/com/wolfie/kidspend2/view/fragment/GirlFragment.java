@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * There sill be instantiated a GirlFragment/GirlPresenter for each {@link Girl} value.
+ * There will be instantiated a GirlFragment/GirlPresenter for each {@link Girl} value.
  * The {@link GirlPresenter} holds the corresponding {@link Girl} instance so that it
  * knows which one it corresponds to.  Note that the currently selected Girl is determined
  * by the {@link GirlPagerPresenter}
@@ -58,6 +58,9 @@ public class GirlFragment extends BaseFragment
 
     @BindView(R.id.add_entry_fab)
     View mAddEntryButton;
+
+    @BindView(R.id.top_right)
+    View mTopRight;
 
     private GirlPresenter mGirlPresenter;
 
@@ -147,6 +150,16 @@ public class GirlFragment extends BaseFragment
             mRecyclerView.setAdapter(adapter);
         }
         return adapter;
+    }
+
+    @OnClick(R.id.top_right)
+    public void onClickTopRight() {
+        mGirlPresenter.onToggleListVisibility();
+    }
+
+    @Override
+    public void setListVisibility(boolean visible) {
+        mRecyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
