@@ -19,31 +19,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/icon_height_closed"
-            android:paddingLeft="@dimen/icon_height_closed"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent"
             >
-            <TextView
-                android:id="@+id/text_heading1"
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                />
+            <LinearLayout
+                android:id="@+id/item_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:gravity="center|right"
-                android:background="@android:color/transparent"
-                android:text="Total"
-                android:layout_marginRight="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/text_heading2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:gravity="center|right"
-                android:background="@android:color/transparent"
-                android:text="$12345"
-                android:layout_marginRight="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corners"
+                >
+                <TextView
+                    android:id="@+id/text_heading1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@android:color/transparent"
+                    android:text="Total"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/text_heading2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@android:color/transparent"
+                    android:text="$12345"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

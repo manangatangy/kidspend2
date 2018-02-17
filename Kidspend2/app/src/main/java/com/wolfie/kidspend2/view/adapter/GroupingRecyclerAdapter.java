@@ -16,8 +16,13 @@ public class GroupingRecyclerAdapter extends PlaceholderRecyclerAdapter<ItemView
 
     private OnItemInListClickedListener mOnItemInListClickedListener;
     private List<Spend> mSpends = new ArrayList<>();
+    private boolean mShowDateAndType;
 
     public GroupingRecyclerAdapter() {
+    }
+
+    public void setShowDateAndType(boolean showDateAndType) {
+        mShowDateAndType = showDateAndType;
     }
 
     @Override
@@ -37,7 +42,7 @@ public class GroupingRecyclerAdapter extends PlaceholderRecyclerAdapter<ItemView
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Spend spend = mSpends.get(position);
         if (holder != null && spend != null) {
-            holder.bind(spend);
+            holder.bind(spend, mShowDateAndType);
         }
     }
 

@@ -26,10 +26,12 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     // Girl (for this instance) is always retrieved from the GirlFragment args.
     public static final String KEY_GIRL_IMAGE_INDEX = "KEY_GIRL_IMAGE_INDEX";
     private final static String KEY_LIST_SPENDTYPE = "KEY_LIST_SPENDTYPE";
+    private final static String KEY_LIST_SHOW_ALL = "KEY_LIST_SHOW_ALL";
 
     // If non-null, then only show spends from this group.
     @Nullable
     private String mSpendType;
+    private boolean mShowAll;      // False means "show summary". True means "show all ordered by date"
 
     // These values are not saved, but refreshed upon resume.
     // Note that mHeadings and mGroupName are taken from here by
@@ -82,6 +84,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     public void onSaveState(Bundle outState) {
         outState.putInt(KEY_GIRL_IMAGE_INDEX, mImageIndex);
         outState.putString(KEY_LIST_SPENDTYPE, mSpendType);
+        outState.putBoolean(KEY_LIST_SHOW_ALL, mShowAll);
     }
 
     @Override
@@ -89,6 +92,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         if (savedState != null) {
             mImageIndex = savedState.getInt(KEY_GIRL_IMAGE_INDEX);
             mSpendType = savedState.getString(KEY_LIST_SPENDTYPE);
+            mShowAll = savedState.getBoolean(KEY_LIST_SHOW_ALL);
         }
     }
 
@@ -133,15 +137,20 @@ public class GirlPresenter extends BasePresenter<GirlUi>
     public void setSpendType(@Nullable String spendType) {
         mSpendType = spendType;
         if (mDataSet != null) {
-            SpendGroup spendGroup = SpendGroup.buildGroup(mSpendType, mDataSet);
-            // It is possible that (for a specified spendType) there will be no spends.
-            // This happens if the last spend in a spendType is deleted (and that spendType
-            // was selected from the nav menu).  In this case, reset the selected spendType
-            // to all (ie null).
-            if (mSpendType != null && spendGroup == null) {
-                setSpendType(null);
+            if (mShowAll) {
+                SpendGroup spendGroup = SpendGroup.makeTotalGroup(mDataSet.getDateSortedSpends());
+                getUi().showEntries(spendGroup, true);
             } else {
-                getUi().showEntries(spendGroup);
+                SpendGroup spendGroup = SpendGroup.buildGroup(mSpendType, mDataSet.getSpends());
+                // It is possible that (for a specified spendType) there will be no spends.
+                // This happens if the last spend in a spendType is deleted (and that spendType
+                // was selected from the nav menu).  In this case, reset the selected spendType
+                // to all (ie null).
+                if (mSpendType != null && spendGroup == null) {
+                    setSpendType(null);
+                } else {
+                    getUi().showEntries(spendGroup, false);
+                }
             }
         }
     }
@@ -178,7 +187,18 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         return mSpendType;
     }
 
+    // False means "show summary". True means "show all ordered by date"
+    public boolean isShowAll() {
+        return mShowAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        mShowAll = showAll;
+    }
+
     public List<String> getHeadings() {
+
+        // TODO: should be null or empty for when isShowAll is set
         return mHeadings;
     }
 
@@ -191,7 +211,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         Girl getGirl();
         void setPageImage(@DrawableRes int resourceId);
         void updateIcon(Girl girl, @ImageShade int imageShade);
-        void showEntries(SpendGroup spendGroup);
+        void showEntries(SpendGroup spendGroup, boolean showDateAndType);
         void setAddEntryVisibility(boolean visible);
     }
 

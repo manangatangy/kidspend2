@@ -57,7 +57,8 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
         if (girlPresenter != null) {
             List<String> headings = girlPresenter.getHeadings();
             String selected = girlPresenter.getSpendType();
-            getUi().refreshListWithHeadings(headings);
+            boolean isShowAll = girlPresenter.isShowAll();
+            getUi().refreshListWithHeadings(headings, isShowAll);
             getUi().selectListItem(selected);
         }
     }
@@ -83,11 +84,25 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
         SettingsPresenter settingsPresenter = getUi().findPresenter(SettingsFragment.class);
         settingsPresenter.show();
     }
+
+    public void onMenuToggleSummaryAllClick() {
+        getUi().closeDrawer();
+        // Flip the toggle held in the girlPresenter and alter the text in the menu
+        GirlPresenter girlPresenter = getCurrentGirlPresenter();
+        if (girlPresenter != null) {
+            boolean isShowAll = !girlPresenter.isShowAll();
+            girlPresenter.setShowAll(isShowAll);
+            // "Select" the top menuitem.
+            girlPresenter.setSpendType(null);
+        }
+    }
+
     public void onMenuExportClick() {
         getUi().closeDrawer();
         FilePresenter filePresenter = getUi().findPresenter(FileFragment.class);
         filePresenter.exporting();
     }
+
     public void onMenuImportClick() {
         getUi().closeDrawer();
         FilePresenter filePresenter = getUi().findPresenter(FileFragment.class);
@@ -111,7 +126,7 @@ public class DrawerPresenter extends BasePresenter<DrawerUi> {
 
     public interface DrawerUi extends BaseUi {
 
-        void refreshListWithHeadings(List<String> headings);
+        void refreshListWithHeadings(List<String> headings,boolean isShowAll);
         void selectListItem(@Nullable String selected);
         void onNavMenuItemClick(String spendType, boolean hasChanged);
         boolean isDrawerOpen();

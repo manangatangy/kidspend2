@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 
 public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecyclerAdapter.MenuItemViewHolder> {
 
+    private static final String ALL_SPENDS = "All Spends";
     private static final String ALL_GROUPS = "Summary";
 
     private Context mContext;
@@ -46,12 +47,16 @@ public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecycler
      * ALL_GROUPS is initially selected.
      * @param groupList
      */
-    public void setMenuItems(List<String> groupList) {
+    public void setMenuItems(List<String> groupList, boolean isShowAll) {
         mItemList.clear();
-        mItemList.add(new Item(ALL_GROUPS, false));
-        if (groupList != null) {
-            for (String group : groupList) {
-                mItemList.add(new Item(group, false));
+        if (isShowAll) {
+            mItemList.add(new Item(ALL_SPENDS, false));
+        } else {
+            mItemList.add(new Item(ALL_GROUPS, false));
+            if (groupList != null) {
+                for (String group : groupList) {
+                    mItemList.add(new Item(group, false));
+                }
             }
         }
         notifyDataSetChanged();
@@ -110,7 +115,7 @@ public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecycler
             mItem = item;
             mTextView.setText(mItem.mText);
             setSelectedChevronVisibility(mItem.mIsSelected);
-            mTopSeparator.setVisibility(ALL_GROUPS.equals(mItem.mText) ? View.INVISIBLE : View.VISIBLE);
+            mTopSeparator.setVisibility(isTopMenuItem(mItem.mText) ? View.INVISIBLE : View.VISIBLE);
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -157,7 +162,7 @@ public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecycler
 
     private void notifyListener(String groupName, boolean hasChanged) {
         if (mNavMenuItemClickListener != null) {
-            if (ALL_GROUPS.equals(groupName)) {
+            if (isTopMenuItem(groupName)) {
                 groupName = null;
             }
             mNavMenuItemClickListener.onNavMenuItemClick(groupName, hasChanged);
@@ -170,6 +175,10 @@ public class NavMenuRecyclerAdapter extends RecyclerView.Adapter<NavMenuRecycler
 
     public interface OnNavMenuItemClickListener {
         void onNavMenuItemClick(String spendType, boolean hasChanged);
+    }
+
+    private boolean isTopMenuItem(String groupName) {
+        return (ALL_GROUPS.equals(groupName) || ALL_SPENDS.equals(groupName));
     }
 
 }

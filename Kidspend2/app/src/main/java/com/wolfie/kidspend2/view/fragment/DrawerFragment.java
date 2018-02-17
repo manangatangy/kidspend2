@@ -57,8 +57,8 @@ public class DrawerFragment extends BaseFragment
     }
 
     @Override
-    public void refreshListWithHeadings(List<String> headings) {
-        getAdapter().setMenuItems(headings);
+    public void refreshListWithHeadings(List<String> headings, boolean isShowAll) {
+        getAdapter().setMenuItems(headings, isShowAll);
     }
 
     @Override
@@ -120,6 +120,11 @@ public class DrawerFragment extends BaseFragment
     @OnClick(R.id.menu_item_settings)
     void onMenuSettings() {
         mDrawerPresenter.onMenuSettingsClick();
+    }
+
+    @OnClick(R.id.menu_toggle_summary_all)
+    void onMenuToggleSummaryAll() {
+        mDrawerPresenter.onMenuToggleSummaryAllClick();
     }
     @OnClick(R.id.menu_item_export)
     void onMenuExport() {

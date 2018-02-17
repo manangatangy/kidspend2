@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * The primary data class, held on the database and represented in the ListFragment.
@@ -132,8 +133,8 @@ public class Spend implements Parcelable {
     }
 
     public static String getToday() {
-        SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy");
-        String format = formatter.format(new Date());
+        SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
+        String format = formatter.format(new Date()).replace(".", "");
         return format;
     }
 

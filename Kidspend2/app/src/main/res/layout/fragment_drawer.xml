@@ -21,6 +21,11 @@
         style="@style/MenuItem"
         android:text="@string/menu_item_import"
         />
+    <TextView
+        android:id="@+id/menu_toggle_summary_all"
+        style="@style/MenuItem"
+        android:text="@string/menu_item_toggle_summary_all"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navigation_recycler_view"
         android:layout_width="match_parent"

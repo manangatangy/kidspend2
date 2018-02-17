@@ -11,13 +11,23 @@ import java.util.List;
 public class DataSet {
 
     private List<Spend> mSpends = new ArrayList<>();
+    private List<Spend> mDateSortedSpends = new ArrayList<>();
 
     public List<Spend> getSpends() {
         return mSpends;
     }
 
+    public List<Spend> getDateSortedSpends() {
+        return mDateSortedSpends;
+    }
+
     public DataSet(List<Spend> spends) {
         this.mSpends = spends;
+        // Also create a list of date sorted spends.
+        for (Spend spend : mSpends) {
+            mDateSortedSpends.add(spend);
+        }
+        DataSet.sortOnDate(mDateSortedSpends);
     }
 
     /**

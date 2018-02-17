@@ -133,8 +133,9 @@ public class GirlFragment extends BaseFragment
     }
 
     @Override
-    public void showEntries(SpendGroup spendGroup) {
+    public void showEntries(SpendGroup spendGroup, boolean showDateAndType) {
         getAdapter().setGroups(spendGroup.getSpends());
+        getAdapter().setShowDateAndType(showDateAndType);
         mHeader1Text.setText(spendGroup.getHeading());
         mHeader2Text.setText(spendGroup.getTotalAsString());
     }

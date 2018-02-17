@@ -40,14 +40,18 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
      * Instead the item represents a subtotal for that spend type.
      * In that case, the description is formatted from the spendType.
      */
-    public void bind(Spend spend) {
+    public void bind(Spend spend, boolean showDateAndType) {
         mSpend = spend;
         // Note that the content text may or may not actually be showing (depending on the expanded state).
         mAmountTextView.setText("$" + spend.getAmountAsString());
         if (spend.isNew()) {
             mDescTextView.setText("- " + spend.getSpendType());
         } else {
-            mDescTextView.setText("- " + spend.getCreated());
+            String str = "- " + spend.getCreated();
+            if (showDateAndType) {
+                str = str + " - " + spend.getSpendType();
+            }
+            mDescTextView.setText(str);
         }
         mLayoutView.setOnClickListener(new View.OnClickListener() {
             @Override
