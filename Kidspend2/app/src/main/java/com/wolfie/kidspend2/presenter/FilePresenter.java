@@ -21,7 +21,7 @@ import com.wolfie.kidspend2.view.fragment.GirlPagerFragment;
 
 import java.io.File;
 
-import static com.wolfie.kidspend2.presenter.SettingsPresenter.PREF_SESSION_BACKUP_EMAIL_ADDRESS;
+import static com.wolfie.kidspend2.presenter.SettingsPresenter.PREF_SETTINGS_BACKUP_EMAIL_ADDRESS;
 
 public class FilePresenter extends BasePresenter<FileUi>
         implements AsyncListeningTask.Listener<IoLoader.IoResult> {
@@ -228,7 +228,7 @@ public class FilePresenter extends BasePresenter<FileUi>
             }
             if (mIsExporting && getUi().isEmailBackup()) {
                 SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String emailAddress =  mPrefs.getString(PREF_SESSION_BACKUP_EMAIL_ADDRESS, "");
+                String emailAddress =  mPrefs.getString(PREF_SETTINGS_BACKUP_EMAIL_ADDRESS, "");
                 File ioFile = getFile();
                 getUi().navigateToEmail(emailAddress, "Kidspend backup file", ioFile);
             } else {
@@ -238,6 +238,15 @@ public class FilePresenter extends BasePresenter<FileUi>
         }
     }
 
+    /*
+        public static final String[] summaryTargetEmails = {
+            backupTargetEmail,
+            "claireweiss1988@gmail.com",
+            "nina.e.weiss@hotmail.com",
+            "rachel.weiss26@hotmail.com"
+    };
+
+     */
     public void onEmailActivityResult(int resultCode, Intent intent) {
         // Can't tell what the email result actually is hmmm.
         getUi().dismissKeyboard(true);

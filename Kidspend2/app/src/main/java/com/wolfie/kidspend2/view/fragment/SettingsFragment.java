@@ -11,18 +11,27 @@ import com.wolfie.kidspend2.R;
 import com.wolfie.kidspend2.presenter.SettingsPresenter;
 import com.wolfie.kidspend2.presenter.SettingsPresenter.SettingsUi;
 import com.wolfie.kidspend2.view.component.settings.GroupSetting;
+import com.wolfie.kidspend2.view.component.settings.ItemAutoEmailTargets;
+import com.wolfie.kidspend2.view.component.settings.ItemAutoEmailThreshold;
 import com.wolfie.kidspend2.view.component.settings.ItemEmailAddress;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SettingsFragment extends ActionSheetFragment
-        implements SettingsUi, ItemEmailAddress.OnHideEmailSettingListener {
+public class SettingsFragment extends ActionSheetFragment implements SettingsUi {
 
     @Nullable
     @BindView(R.id.setting_item_email_address)
     ItemEmailAddress mItemEmailAddress;
+
+    @Nullable
+    @BindView(R.id.setting_item_auto_email_targets)
+    ItemAutoEmailTargets mItemAutoEmailTargets;
+
+    @Nullable
+    @BindView(R.id.setting_item_auto_email_threshold)
+    ItemAutoEmailThreshold mItemAutoEmailThreshold;
 
     @Nullable
     @BindView(R.id.button_close)
@@ -60,9 +69,28 @@ public class SettingsFragment extends ActionSheetFragment
                 mSettingsPresenter.onClickClose();
             }
         });
-        mItemEmailAddress.setOnHideEmailSettingListener(this);
+        mItemEmailAddress.setOnHideEmailSettingListener(new ItemEmailAddress.OnHideEmailSettingListener() {
+            @Override
+            public void onHideEmailSetting(String emailAddress) {
+                mSettingsPresenter.onHideEmailSetting(emailAddress);
+            }
+        });
+        mItemAutoEmailTargets.setOnHideSettingListener(new ItemAutoEmailTargets.OnHideSettingListener() {
+            @Override
+            public void onHideSetting(String emailTargets) {
+                mSettingsPresenter.onHideAutoEmailTargetsSetting(emailTargets);
+            }
+        });
+        mItemAutoEmailThreshold.setOnHideSettingListener(new ItemAutoEmailThreshold.OnHideSettingListener() {
+            @Override
+            public void onHideSetting(String amountThreshold) {
+                mSettingsPresenter.onHideAutoEmailThresholdSetting(amountThreshold);
+            }
+        });
 
         mItemEmailAddress.setGroupSetting(mGroupSetting);
+        mItemAutoEmailTargets.setGroupSetting(mGroupSetting);
+        mItemAutoEmailThreshold.setGroupSetting(mGroupSetting);
 
         return view;
     }
@@ -81,13 +109,19 @@ public class SettingsFragment extends ActionSheetFragment
         mUnbinder2.unbind();
     }
 
+    @Override
     public void setEmailAddress(String emailAddress) {
         mItemEmailAddress.setEmailAddress(emailAddress);
     }
 
     @Override
-    public void onHideEmailSetting(String emailAddress) {
-        mSettingsPresenter.onHideEmailSetting(emailAddress);
+    public void setAutoTargets(String autoTargets) {
+        mItemAutoEmailTargets.setAutoEmailTargets(autoTargets);
+    }
+
+    @Override
+    public void setAutoThreshold(String autoThreshold) {
+        mItemAutoEmailThreshold.setAutoEmailThreshold(autoThreshold);
     }
 
     @Override

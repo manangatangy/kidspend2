@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 />
             <LinearLayout
-                android:id="@+id/item_layout"
+                android:id="@+id/top_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

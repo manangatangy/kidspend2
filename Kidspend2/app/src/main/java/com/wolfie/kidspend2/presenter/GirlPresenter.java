@@ -52,6 +52,11 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         if (girl == null) {
             Log.d("Kidspend", "GirlPresenter.resume(): mGirl is null ! uh-oh");
         }
+
+        MainPresenter mainPresenter = getUi().findPresenter(null);
+        boolean listVisibility = mainPresenter.areListsVisible();
+        getUi().setListVisibility(listVisibility);
+
         getUi().setPageImage(girl.getImageResourceId(mImageIndex));
         // Note that resume may be called although this instance is not currently showing
         // so we should not call updateIcon here; use the onShowing protocol instead.
@@ -63,6 +68,17 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         // Update the icon using the current image's shade.
         Girl girl = getUi().getGirl();
         getUi().updateIcon(girl, girl.getImageShade(mImageIndex));
+
+        MainPresenter mainPresenter = getUi().findPresenter(null);
+        boolean listVisibility = mainPresenter.areListsVisible();
+        getUi().setListVisibility(listVisibility);
+    }
+
+    public void onToggleListVisibility() {
+        MainPresenter mainPresenter = getUi().findPresenter(null);
+        mainPresenter.toggleListsVisibility();
+        boolean listVisibility = mainPresenter.areListsVisible();
+        getUi().setListVisibility(listVisibility);
     }
 
     public void bumpImage() {
@@ -73,11 +89,6 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         getUi().setPageImage(girl.getImageResourceId(mImageIndex));
         getUi().updateIcon(girl, girl.getImageShade(mImageIndex));
         getUi().hidePullToRefreshSpinner();
-    }
-
-    @Override
-    public void pause() {
-        super.pause();
     }
 
     @Override
@@ -212,6 +223,7 @@ public class GirlPresenter extends BasePresenter<GirlUi>
         void setPageImage(@DrawableRes int resourceId);
         void updateIcon(Girl girl, @ImageShade int imageShade);
         void showEntries(SpendGroup spendGroup, boolean showDateAndType);
+        void setListVisibility(boolean visible);
         void setAddEntryVisibility(boolean visible);
     }
 
